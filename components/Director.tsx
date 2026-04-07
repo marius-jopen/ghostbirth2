@@ -2,16 +2,14 @@ export default function Director() {
   return (
     <section className="section">
       <h2 className="section-title">Director</h2>
-      <div className="section-text-wrap">
-        <p className="section-text">
-          Marius Jopen is a Berlin-based filmmaker and creative technologist. His
-          debut film Space Birth — a no-budget science fiction film built with 300
-          volunteers and a spaceship made of cardboard — screened at Cinema Oasis
-          Bangkok, where it won an award and led to the residency where Ghostbirth
-          originated. Three research trips to Bangkok, 140 casting sessions, and a
-          self-funded test shoot followed. Ghostbirth 2 is his second feature
-          film.
-        </p>
+      <div className="section-text-wrap section-text">
+        Marius Jopen is a Berlin-based filmmaker and creative technologist. His
+        debut film Space Birth — a no-budget science fiction film built with 300
+        volunteers and a spaceship made of cardboard — screened at Cinema Oasis
+        Bangkok, where it won an award and led to the residency where Ghostbirth
+        originated. Three research trips to Bangkok, 140 casting sessions, and a
+        self-funded test shoot followed. Ghostbirth 2 is his second feature
+        film.
       </div>
     </section>
   );

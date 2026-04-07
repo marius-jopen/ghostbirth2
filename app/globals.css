@@ -60,6 +60,7 @@ img {
 .section-text-wrap {
   column-count: 2;
   column-gap: 40px;
+  column-fill: balance;
 }
 
 .section-text {
@@ -68,6 +69,7 @@ img {
   line-height: 1.7;
   color: var(--white);
   margin-bottom: 1em;
+  break-inside: avoid;
 }
 
 @media (max-width: 767px) {

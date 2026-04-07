@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import styles from "./Gallery.module.css";
 
 const images = [
@@ -30,11 +30,15 @@ const images = [
 
 export default function Gallery() {
   const [lightbox, setLightbox] = useState<number | null>(null);
+  const [showControls, setShowControls] = useState(false);
+  const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const close = useCallback(() => setLightbox(null), []);
   const prev = useCallback(
     () =>
-      setLightbox((i) => (i !== null ? (i - 1 + images.length) % images.length : null)),
+      setLightbox((i) =>
+        i !== null ? (i - 1 + images.length) % images.length : null
+      ),
     []
   );
   const next = useCallback(
@@ -43,8 +47,17 @@ export default function Gallery() {
     []
   );
 
+  const onMouseMove = useCallback(() => {
+    setShowControls(true);
+    if (hideTimer.current) clearTimeout(hideTimer.current);
+    hideTimer.current = setTimeout(() => setShowControls(false), 2000);
+  }, []);
+
   useEffect(() => {
-    if (lightbox === null) return;
+    if (lightbox === null) {
+      setShowControls(false);
+      return;
+    }
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") close();
       if (e.key === "ArrowLeft") prev();
@@ -55,8 +68,13 @@ export default function Gallery() {
     return () => {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
+      if (hideTimer.current) clearTimeout(hideTimer.current);
     };
   }, [lightbox, close, prev, next]);
+
+  const controlsClass = `${styles.lightboxControls} ${
+    showControls ? styles.lightboxControlsVisible : ""
+  }`;
 
   return (
     <section className={styles.section}>
@@ -82,18 +100,40 @@ export default function Gallery() {
       </div>
 
       {lightbox !== null && (
-        <div className={styles.lightbox} onClick={close}>
-          <button
-            className={styles.lightboxNav}
-            style={{ left: 16 }}
-            onClick={(e) => {
-              e.stopPropagation();
-              prev();
-            }}
-            aria-label="Previous image"
-          >
-            ←
-          </button>
+        <div
+          className={`${styles.lightbox} ${showControls ? styles.lightboxActive : ""}`}
+          onClick={close}
+          onMouseMove={onMouseMove}
+        >
+          <div className={`${controlsClass} ${styles.lightboxBar}`}>
+            <button
+              className={styles.lightboxBtn}
+              onClick={(e) => {
+                e.stopPropagation();
+                prev();
+              }}
+              aria-label="Previous image"
+            >
+              ←
+            </button>
+            <button
+              className={styles.lightboxBtn}
+              onClick={close}
+              aria-label="Close lightbox"
+            >
+              ✕
+            </button>
+            <button
+              className={styles.lightboxBtn}
+              onClick={(e) => {
+                e.stopPropagation();
+                next();
+              }}
+              aria-label="Next image"
+            >
+              →
+            </button>
+          </div>
           <Image
             src={`/images/${images[lightbox]}`}
             alt=""
@@ -101,24 +141,6 @@ export default function Gallery() {
             className={styles.lightboxImage}
             onClick={(e) => e.stopPropagation()}
           />
-          <button
-            className={styles.lightboxNav}
-            style={{ right: 16 }}
-            onClick={(e) => {
-              e.stopPropagation();
-              next();
-            }}
-            aria-label="Next image"
-          >
-            →
-          </button>
-          <button
-            className={styles.lightboxClose}
-            onClick={close}
-            aria-label="Close lightbox"
-          >
-            ✕
-          </button>
         </div>
       )}
     </section>
