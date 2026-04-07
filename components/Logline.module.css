@@ -1,0 +1,19 @@
+.logline {
+  padding: 64px 24px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.text {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono);
+  line-height: 1.8;
+  color: var(--white);
+}
+
+@media (min-width: 768px) {
+  .logline {
+    padding: 80px 48px;
+  }
+}
