@@ -7,31 +7,35 @@ import Director from "@/components/Director";
 import Gallery from "@/components/Gallery";
 import Status from "@/components/Status";
 import Footer from "@/components/Footer";
+import Nav from "@/components/Nav";
+import LangSwitcher from "@/components/LangSwitcher";
 import ScrollReveal from "@/components/ScrollReveal";
 
 export default function Home() {
   return (
     <>
-      <Hero />
-      <ScrollReveal>
-        <Logline />
-      </ScrollReveal>
-      <ScrollReveal>
-        <About />
-      </ScrollReveal>
-      <VideoBreak src="/video-2.mp4" />
-      <ScrollReveal>
-        <Story />
-      </ScrollReveal>
-      <VideoBreak src="/video-1.mov" />
-      <ScrollReveal>
-        <Director />
-      </ScrollReveal>
-      <Gallery />
-      {/* <Status /> */}
-      <ScrollReveal>
+      <Nav />
+      <LangSwitcher />
+      <div id="site-content">
+        <Hero />
+        <ScrollReveal auto delay={1.5}>
+          <Logline />
+        </ScrollReveal>
+        <ScrollReveal auto delay={2.5}>
+          <About />
+        </ScrollReveal>
+        <VideoBreak src="/video-2.mp4" />
+        <ScrollReveal>
+          <Story />
+        </ScrollReveal>
+        <VideoBreak src="/video-1.mov" />
+        <ScrollReveal>
+          <Director />
+        </ScrollReveal>
+        <Gallery />
+        {/* <Status /> */}
         <Footer />
-      </ScrollReveal>
+      </div>
     </>
   );
 }

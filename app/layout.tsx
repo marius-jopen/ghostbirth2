@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+
+import { LangProvider } from "@/components/LangContext";
 import "./globals.css";
 
 const gravity = localFont({
@@ -14,6 +16,7 @@ const mono = localFont({
   display: "swap",
 });
 
+
 export const metadata: Metadata = {
   title: "Ghostbirth 2 — A Film by Marius Jopen",
   description:
@@ -27,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${gravity.variable} ${mono.variable}`}>
-      <body>{children}</body>
+      <body><LangProvider>{children}</LangProvider></body>
     </html>
   );
 }

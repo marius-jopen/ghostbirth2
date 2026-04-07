@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState, useEffect, useCallback, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLang } from "./LangContext";
 import styles from "./Gallery.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -43,6 +44,7 @@ function getIsMobile() {
 }
 
 export default function Gallery() {
+  const { t } = useLang();
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [visibleCount, setVisibleCount] = useState(DESKTOP_INITIAL);
@@ -123,8 +125,8 @@ export default function Gallery() {
   }`;
 
   return (
-    <section className={styles.section}>
-      <h2 className="section-title">Test Shoot</h2>
+    <section id="gallery" className={styles.section}>
+      <h2 className="section-title">{t.gallery.title}</h2>
       <div className={styles.grid} ref={gridRef}>
         {visibleImages.map((src, i) => (
           <button
@@ -146,10 +148,10 @@ export default function Gallery() {
       </div>
       {hasMore && (
         <button
-          className={styles.loadMore}
+          className={`pill-btn ${styles.loadMore}`}
           onClick={() => setVisibleCount((c) => Math.min(c + (isMobile ? MOBILE_MORE : DESKTOP_MORE), images.length))}
         >
-          Load more images
+          {t.gallery.loadMore}
         </button>
       )}
 

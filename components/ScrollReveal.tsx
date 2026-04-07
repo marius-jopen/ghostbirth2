@@ -9,9 +9,11 @@ gsap.registerPlugin(ScrollTrigger);
 export default function ScrollReveal({
   children,
   delay = 0,
+  auto = false,
 }: {
   children: React.ReactNode;
   delay?: number;
+  auto?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -27,17 +29,19 @@ export default function ScrollReveal({
       duration: 1,
       delay,
       ease: "power3.out",
-      scrollTrigger: {
-        trigger: el,
-        start: "top 85%",
-        once: true,
-      },
+      scrollTrigger: auto
+        ? undefined
+        : {
+            trigger: el,
+            start: "top 85%",
+            once: true,
+          },
     });
 
     return () => {
       tween.kill();
     };
-  }, [delay]);
+  }, [delay, auto]);
 
   return <div ref={ref}>{children}</div>;
 }

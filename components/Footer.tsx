@@ -1,16 +1,19 @@
+"use client";
+
+import { useLang } from "./LangContext";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
+  const { t } = useLang();
   return (
-    <footer className={styles.footer}>
-      <p className={styles.credit}>
-        A film by Marius Jopen &middot; Produced by THE PEOPLE
-      </p>
+    <footer id="contact" className={styles.footer}>
+      <h2 className="section-title">{t.footer.title}</h2>
+      <p className={styles.credit}>{t.footer.credit}</p>
       <p className={styles.email}>
         <a href="mailto:kontakt@thepeople.de">kontakt@thepeople.de</a>
       </p>
       <div id="newsletter">{/* Substack embed goes here */}</div>
-      <p className={styles.copyright}>&copy; 2026 THE PEOPLE</p>
+      <p className={styles.copyright}>{t.footer.copyright}</p>
     </footer>
   );
 }

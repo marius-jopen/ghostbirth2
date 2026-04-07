@@ -1,11 +1,13 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { useLang } from "./LangContext";
 import styles from "./VideoBreak.module.css";
 
 export default function VideoBreak({ src }: { src: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
+  const { t } = useLang();
 
   const toggleSound = () => {
     if (videoRef.current) {
@@ -26,11 +28,11 @@ export default function VideoBreak({ src }: { src: string }) {
         playsInline
       />
       <button
-        className={styles.soundToggle}
+        className={`pill-btn ${styles.soundToggle}`}
         onClick={toggleSound}
         aria-label={muted ? "Unmute" : "Mute"}
       >
-        {muted ? "SOUND ON" : "SOUND OFF"}
+        {muted ? t.video.soundOn : t.video.soundOff}
       </button>
     </section>
   );

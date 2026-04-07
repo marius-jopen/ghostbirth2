@@ -98,19 +98,5 @@
 
 .loadMore {
   display: block;
-  margin: 32px auto 0;
-  background: none;
-  border: 1px solid var(--white);
-  color: var(--white);
-  font-family: var(--font-mono);
-  font-size: var(--font-size-mono);
-  padding: 12px 32px;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.loadMore:hover {
-  background: var(--white);
-  color: var(--black);
+  margin: 48px auto 0;
 }

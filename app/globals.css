@@ -23,6 +23,11 @@ html {
 body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+body.ready {
+  overflow: auto;
 }
 
 a {
@@ -83,3 +88,25 @@ img {
     padding: 80px 48px;
   }
 }
+
+/* Shared pill button */
+.pill-btn {
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 100px;
+  color: var(--white);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 8px 20px;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.pill-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+}
+
