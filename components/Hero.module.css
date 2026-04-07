@@ -28,7 +28,6 @@
   font-size: clamp(3rem, 15vw, 12rem);
   color: var(--white);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
   line-height: 0.9;
   white-space: nowrap;
   padding: 0 24px;

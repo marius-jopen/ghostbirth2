@@ -67,18 +67,43 @@ export default function Gallery() {
     const cells = Array.from(gridRef.current.children);
     const newCells = cells.slice(animatedCount.current);
     if (newCells.length === 0) return;
-    gsap.set(newCells, { opacity: 0, y: 30 });
-    gsap.to(newCells, {
-      opacity: 1,
-      y: 0,
-      duration: 0.6,
-      stagger: 0.08,
-      ease: "power3.out",
-      scrollTrigger: animatedCount.current === 0
-        ? { trigger: gridRef.current, start: "top 85%", once: true }
-        : undefined,
-    });
+
+    const isFirst = animatedCount.current === 0;
     animatedCount.current = cells.length;
+
+    gsap.set(newCells, { opacity: 0, y: 30 });
+
+    const animate = () => {
+      gsap.to(newCells, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.08,
+        ease: "power3.out",
+      });
+    };
+
+    if (isFirst) {
+      // Use ScrollTrigger for first batch, but with a fallback
+      const st = ScrollTrigger.create({
+        trigger: gridRef.current,
+        start: "top 90%",
+        once: true,
+        onEnter: animate,
+      });
+      // Fallback: if not triggered after 4s, animate anyway
+      const fallback = setTimeout(() => {
+        if (newCells[0] && getComputedStyle(newCells[0]).opacity === "0") {
+          animate();
+        }
+      }, 4000);
+      return () => {
+        st.kill();
+        clearTimeout(fallback);
+      };
+    } else {
+      animate();
+    }
   }, [visibleCount]);
 
   const close = useCallback(() => setLightbox(null), []);

@@ -21,25 +21,37 @@ export default function ScrollReveal({
     const el = ref.current;
     if (!el) return;
 
-    gsap.set(el, { opacity: 0, y: 40 });
+    gsap.set(el, { opacity: 0, y: 20 });
 
-    const tween = gsap.to(el, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      delay,
-      ease: "power3.out",
-      scrollTrigger: auto
-        ? undefined
-        : {
-            trigger: el,
-            start: "top 85%",
-            once: true,
-          },
-    });
+    if (auto) {
+      const tween = gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        delay,
+        ease: "power2.out",
+      });
+      return () => tween.kill();
+    }
+
+    let revealed = false;
+    const reveal = () => {
+      if (revealed) return;
+      revealed = true;
+      gsap.to(el, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" });
+    };
+
+    const onScroll = () => {
+      const rect = el.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight * 0.95 && rect.bottom > window.innerHeight * 0.05;
+      if (inView) reveal();
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
 
     return () => {
-      tween.kill();
+      window.removeEventListener("scroll", onScroll);
     };
   }, [delay, auto]);
 

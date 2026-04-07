@@ -30,7 +30,6 @@
   padding: 6px 14px;
   border-radius: 100px;
   white-space: nowrap;
-  letter-spacing: 0.03em;
   text-transform: uppercase;
   transition: background 0.2s;
 }

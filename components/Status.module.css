@@ -73,7 +73,6 @@
   font-size: var(--font-size-mono);
   color: var(--red);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
   text-align: right;
   white-space: nowrap;
 }

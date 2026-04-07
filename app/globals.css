@@ -56,7 +56,6 @@ img {
   font-size: clamp(4rem, 15vw, 12rem);
   color: var(--red);
   text-transform: uppercase;
-  letter-spacing: 0.02em;
   line-height: 0.9;
   margin-bottom: 40px;
   text-align: center;
@@ -98,7 +97,6 @@ img {
   color: var(--white);
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  letter-spacing: 0.05em;
   padding: 8px 20px;
   cursor: pointer;
   text-transform: uppercase;
@@ -108,5 +106,12 @@ img {
 .pill-btn:hover {
   background: rgba(255, 255, 255, 0.1);
   color: var(--white);
+}
+
+@media (max-width: 767px) {
+  .pill-btn {
+    font-size: 0.625rem;
+    padding: 8px 16px;
+  }
 }
 
