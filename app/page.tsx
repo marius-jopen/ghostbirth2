@@ -9,6 +9,7 @@ import Status from "@/components/Status";
 import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
 import LangSwitcher from "@/components/LangSwitcher";
+import BloodSmear from "@/components/BloodSmear";
 import ScrollReveal from "@/components/ScrollReveal";
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
       <Nav />
       <LangSwitcher />
       <div id="site-content">
+        <BloodSmear />
         <Hero />
         <ScrollReveal auto delay={1.5}>
           <Logline />
