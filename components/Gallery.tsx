@@ -2,7 +2,11 @@
 
 import Image from "next/image";
 import { useState, useEffect, useCallback, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./Gallery.module.css";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const images = [
   "Cinema_01_14_36_24-1.jpeg",
@@ -28,10 +32,52 @@ const images = [
   "Temple_01_28_31_22.jpeg",
 ];
 
+const DESKTOP_INITIAL = 9;
+const DESKTOP_MORE = 6;
+const MOBILE_INITIAL = 6;
+const MOBILE_MORE = 3;
+const MOBILE_BREAKPOINT = 768;
+
+function getIsMobile() {
+  return typeof window !== "undefined" && window.innerWidth < MOBILE_BREAKPOINT;
+}
+
 export default function Gallery() {
   const [lightbox, setLightbox] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(DESKTOP_INITIAL);
+
+  useEffect(() => {
+    const mobile = getIsMobile();
+    setIsMobile(mobile);
+    setVisibleCount(mobile ? MOBILE_INITIAL : DESKTOP_INITIAL);
+  }, []);
   const [showControls, setShowControls] = useState(false);
   const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const animatedCount = useRef(0);
+
+  const visibleImages = images.slice(0, visibleCount);
+  const hasMore = visibleCount < images.length;
+
+  useEffect(() => {
+    if (!gridRef.current) return;
+    const cells = Array.from(gridRef.current.children);
+    const newCells = cells.slice(animatedCount.current);
+    if (newCells.length === 0) return;
+    gsap.set(newCells, { opacity: 0, y: 30 });
+    gsap.to(newCells, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      stagger: 0.08,
+      ease: "power3.out",
+      scrollTrigger: animatedCount.current === 0
+        ? { trigger: gridRef.current, start: "top 85%", once: true }
+        : undefined,
+    });
+    animatedCount.current = cells.length;
+  }, [visibleCount]);
 
   const close = useCallback(() => setLightbox(null), []);
   const prev = useCallback(
@@ -79,8 +125,8 @@ export default function Gallery() {
   return (
     <section className={styles.section}>
       <h2 className="section-title">Test Shoot</h2>
-      <div className={styles.grid}>
-        {images.map((src, i) => (
+      <div className={styles.grid} ref={gridRef}>
+        {visibleImages.map((src, i) => (
           <button
             key={src}
             className={styles.cell}
@@ -98,12 +144,21 @@ export default function Gallery() {
           </button>
         ))}
       </div>
+      {hasMore && (
+        <button
+          className={styles.loadMore}
+          onClick={() => setVisibleCount((c) => Math.min(c + (isMobile ? MOBILE_MORE : DESKTOP_MORE), images.length))}
+        >
+          Load more images
+        </button>
+      )}
 
       {lightbox !== null && (
         <div
           className={`${styles.lightbox} ${showControls ? styles.lightboxActive : ""}`}
           onClick={close}
           onMouseMove={onMouseMove}
+          onTouchStart={onMouseMove}
         >
           <div className={`${controlsClass} ${styles.lightboxBar}`}>
             <button

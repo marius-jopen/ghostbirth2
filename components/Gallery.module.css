@@ -1,5 +1,5 @@
 .section {
-  padding: 40px 0;
+  padding: 40px 0 16px;
 }
 
 .section .grid {
@@ -14,7 +14,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 4px;
 }
 
@@ -60,12 +60,18 @@
 }
 
 .lightboxControls {
-  opacity: 0;
-  transition: opacity 0.4s;
+  opacity: 1;
 }
 
-.lightboxControlsVisible {
-  opacity: 1;
+@media (min-width: 768px) {
+  .lightboxControls {
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .lightboxControlsVisible {
+    opacity: 1;
+  }
 }
 
 .lightboxBar {
@@ -88,4 +94,23 @@
   font-size: clamp(2rem, 4vw, 3rem);
   cursor: pointer;
   padding: 8px;
+}
+
+.loadMore {
+  display: block;
+  margin: 32px auto 0;
+  background: none;
+  border: 1px solid var(--white);
+  color: var(--white);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono);
+  padding: 12px 32px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.loadMore:hover {
+  background: var(--white);
+  color: var(--black);
 }

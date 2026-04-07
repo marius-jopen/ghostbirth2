@@ -2,8 +2,14 @@
   position: relative;
   width: 100%;
   padding: 0;
-  aspect-ratio: 20 / 10;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    aspect-ratio: 20 / 10;
+  }
 }
 
 .video {
@@ -26,10 +32,16 @@
   padding: 6px 12px;
   cursor: pointer;
   z-index: 1;
-  opacity: 0;
-  transition: opacity 0.3s;
+  opacity: 1;
 }
 
-.wrapper:hover .soundToggle {
-  opacity: 1;
+@media (min-width: 768px) {
+  .soundToggle {
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .wrapper:hover .soundToggle {
+    opacity: 1;
+  }
 }

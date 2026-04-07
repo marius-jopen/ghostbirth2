@@ -7,20 +7,31 @@ import Director from "@/components/Director";
 import Gallery from "@/components/Gallery";
 import Status from "@/components/Status";
 import Footer from "@/components/Footer";
+import ScrollReveal from "@/components/ScrollReveal";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <Logline />
-      <About />
+      <ScrollReveal>
+        <Logline />
+      </ScrollReveal>
+      <ScrollReveal>
+        <About />
+      </ScrollReveal>
       <VideoBreak src="/video-2.mp4" />
-      <Story />
+      <ScrollReveal>
+        <Story />
+      </ScrollReveal>
       <VideoBreak src="/video-1.mov" />
-      <Director />
+      <ScrollReveal>
+        <Director />
+      </ScrollReveal>
       <Gallery />
       {/* <Status /> */}
-      <Footer />
+      <ScrollReveal>
+        <Footer />
+      </ScrollReveal>
     </>
   );
 }

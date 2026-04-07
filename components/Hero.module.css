@@ -1,6 +1,6 @@
 .hero {
   position: relative;
-  aspect-ratio: 20 / 10;
+  aspect-ratio: 4 / 3;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -55,4 +55,10 @@
 
 .scroll:hover {
   opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .hero {
+    aspect-ratio: 20 / 10;
+  }
 }
