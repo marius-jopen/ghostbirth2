@@ -124,16 +124,47 @@ export default function BloodSmear() {
       if (!rafId) rafId = requestAnimationFrame(draw);
     };
 
+    let touchDropTimer: ReturnType<typeof setTimeout> | null = null;
+    let lastTouchX = 0;
+    let lastTouchY = 0;
+
+    const drawDrop = (x: number, y: number) => {
+      // Random blood drop
+      const size = Math.random() * 10 + 4;
+      ctx.fillStyle = "#ff0000";
+      ctx.beginPath();
+      ctx.arc(x, y, size, 0, Math.PI * 2);
+      ctx.fill();
+
+      // A few tiny satellite drops
+      const count = Math.floor(Math.random() * 3) + 1;
+      for (let i = 0; i < count; i++) {
+        const ox = x + (Math.random() - 0.5) * size * 4;
+        const oy = y + (Math.random() - 0.5) * size * 4;
+        const sr = Math.random() * 2 + 0.5;
+        ctx.beginPath();
+        ctx.arc(ox, oy, sr, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    };
+
     const onTouchMove = (e: TouchEvent) => {
-      if (isScrolling) return;
       const touch = e.touches[0];
       if (!touch) return;
-      pendingDraw = { x: touch.clientX, y: touch.clientY + window.scrollY };
-      if (!rafId) rafId = requestAnimationFrame(draw);
+      lastTouchX = touch.clientX;
+      lastTouchY = touch.clientY + window.scrollY;
+
+      // Randomly drop blood (roughly 1 in 8 touch events)
+      if (Math.random() > 0.87) {
+        const jitterX = lastTouchX + (Math.random() - 0.5) * 40;
+        const jitterY = lastTouchY + (Math.random() - 0.5) * 40;
+        drawDrop(jitterX, jitterY);
+      }
     };
 
     const onTouchEnd = () => {
       hasPrev = false;
+      if (touchDropTimer) clearTimeout(touchDropTimer);
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
