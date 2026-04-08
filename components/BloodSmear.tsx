@@ -19,42 +19,51 @@ export default function BloodSmear() {
     let hasPrev = false;
     let isScrolling = false;
     let scrollTimer: ReturnType<typeof setTimeout> | null = null;
+    let pendingDraw: { x: number; y: number } | null = null;
+    let rafId: number | null = null;
+    let currentHeight = 0;
 
-    const resize = () => {
-      const dpr = window.devicePixelRatio || 1;
-      const pageHeight = document.documentElement.scrollHeight;
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = pageHeight * dpr;
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${pageHeight}px`;
-      ctx.scale(dpr, dpr);
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
-      ctx.putImageData(imageData, 0, 0);
+    const setCanvasSize = () => {
+      const w = window.innerWidth;
+      const h = document.documentElement.scrollHeight;
+      if (canvas.width === w && currentHeight === h) return;
+      // Only grow, never shrink (preserves drawings)
+      const newH = Math.max(h, currentHeight);
+      if (canvas.width !== w || canvas.height !== newH) {
+        const temp = document.createElement("canvas");
+        temp.width = canvas.width;
+        temp.height = canvas.height;
+        temp.getContext("2d")?.drawImage(canvas, 0, 0);
+        canvas.width = w;
+        canvas.height = newH;
+        ctx.drawImage(temp, 0, 0);
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+      }
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${newH}px`;
+      currentHeight = newH;
     };
 
-    resize();
-    window.addEventListener("resize", resize);
+    setCanvasSize();
+    window.addEventListener("resize", setCanvasSize);
 
-    const observer = new MutationObserver(resize);
-    observer.observe(document.body, { childList: true, subtree: true });
+    // Check page height periodically (cheap, no MutationObserver)
+    const heightCheck = setInterval(setCanvasSize, 2000);
 
-    // When scrolling, break the line so no strokes happen during scroll
     const onScroll = () => {
       isScrolling = true;
       hasPrev = false;
       if (scrollTimer) clearTimeout(scrollTimer);
-      scrollTimer = setTimeout(() => {
-        isScrolling = false;
-      }, 150);
+      scrollTimer = setTimeout(() => { isScrolling = false; }, 100);
     };
 
-    const onMouseMove = (e: MouseEvent) => {
-      if (isScrolling) return;
-
-      const x = e.clientX;
-      const y = e.clientY + window.scrollY;
+    const draw = () => {
+      rafId = null;
+      if (!pendingDraw) return;
+      const x = pendingDraw.x;
+      const y = pendingDraw.y;
+      pendingDraw = null;
 
       if (!hasPrev) {
         prevX = x;
@@ -66,15 +75,11 @@ export default function BloodSmear() {
       const dx = x - prevX;
       const dy = y - prevY;
       const dist = Math.sqrt(dx * dx + dy * dy);
-
       if (dist < 2) return;
 
-      // Thicker when slow, thinner when fast — smoothly interpolated
       const targetThickness = Math.max(1, Math.min(40, 300 / (dist + 3)));
-      // Jump to thickness more aggressively — less smoothing for splattery feel
       currentThickness += (targetThickness - currentThickness) * 0.7;
 
-      // Main smear stroke
       ctx.beginPath();
       ctx.moveTo(prevX, prevY);
       ctx.lineTo(x, y);
@@ -82,10 +87,11 @@ export default function BloodSmear() {
       ctx.lineWidth = currentThickness;
       ctx.stroke();
 
-      // Sprinkles — tiny dots scattered along the path
-      if (dist > 8) {
-        const sprinkleCount = Math.floor(dist / 6);
-        for (let i = 0; i < sprinkleCount; i++) {
+      // Sprinkles
+      if (dist > 12) {
+        const count = Math.min(3, Math.floor(dist / 10));
+        ctx.fillStyle = "#ff0000";
+        for (let i = 0; i < count; i++) {
           const t = Math.random();
           const spread = currentThickness * 2 + dist * 0.3;
           const sx = prevX + dx * t + (Math.random() - 0.5) * spread;
@@ -93,61 +99,41 @@ export default function BloodSmear() {
           const sr = Math.random() * 1.5 + 0.5;
           ctx.beginPath();
           ctx.arc(sx, sy, sr, 0, Math.PI * 2);
-          ctx.fillStyle = "#ff0000";
           ctx.fill();
         }
       }
 
-      // Medium splashes on moderate speed
-      if (dist > 20 && Math.random() > 0.5) {
-        const splats = Math.floor(Math.random() * 3) + 1;
-        for (let i = 0; i < splats; i++) {
-          const sx = x + (Math.random() - 0.5) * dist * 1.2;
-          const sy = y + (Math.random() - 0.5) * dist * 1.2;
-          const sr = Math.random() * 5 + 2;
-          ctx.beginPath();
-          ctx.arc(sx, sy, sr, 0, Math.PI * 2);
-          ctx.fillStyle = "#ff0000";
-          ctx.fill();
-        }
-      }
-
-      // Big splashes on fast movement
-      if (dist > 50 && Math.random() > 0.4) {
-        const bigSplats = Math.floor(Math.random() * 3) + 1;
-        for (let i = 0; i < bigSplats; i++) {
-          const sx = x + (Math.random() - 0.5) * dist * 1.5;
-          const sy = y + (Math.random() - 0.5) * dist * 1.5;
-          const sr = Math.random() * 12 + 5;
-          ctx.beginPath();
-          ctx.arc(sx, sy, sr, 0, Math.PI * 2);
-          ctx.fillStyle = "#ff0000";
-          ctx.fill();
-          // Sprinkles around big splashes
-          for (let j = 0; j < 8; j++) {
-            const px = sx + (Math.random() - 0.5) * sr * 4;
-            const py = sy + (Math.random() - 0.5) * sr * 4;
-            const pr = Math.random() * 1.5 + 0.3;
-            ctx.beginPath();
-            ctx.arc(px, py, pr, 0, Math.PI * 2);
-            ctx.fill();
-          }
-        }
+      // Splashes
+      if (dist > 40 && Math.random() > 0.6) {
+        ctx.fillStyle = "#ff0000";
+        const sx = x + (Math.random() - 0.5) * dist;
+        const sy = y + (Math.random() - 0.5) * dist;
+        const sr = Math.random() * 8 + 3;
+        ctx.beginPath();
+        ctx.arc(sx, sy, sr, 0, Math.PI * 2);
+        ctx.fill();
       }
 
       prevX = x;
       prevY = y;
     };
 
+    const onMouseMove = (e: MouseEvent) => {
+      if (isScrolling) return;
+      pendingDraw = { x: e.clientX, y: e.clientY + window.scrollY };
+      if (!rafId) rafId = requestAnimationFrame(draw);
+    };
+
     window.addEventListener("scroll", onScroll, { passive: true });
-    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mousemove", onMouseMove, { passive: true });
 
     return () => {
       document.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", resize);
-      observer.disconnect();
+      window.removeEventListener("resize", setCanvasSize);
+      clearInterval(heightCheck);
       if (scrollTimer) clearTimeout(scrollTimer);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 
