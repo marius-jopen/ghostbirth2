@@ -28,11 +28,12 @@ const de: Translations = {
     text: "Marius Jopen ist ein in Berlin ans\u00e4ssiger Filmemacher und Kreativtechnologe. Sein Deb\u00fctfilm Space Birth \u2014 ein No-Budget-Science-Fiction-Film mit 300 Freiwilligen und einem Raumschiff aus Pappe \u2014 wurde im Cinema Oasis Bangkok gezeigt, wo er einen Preis gewann und zu der Residenz f\u00fchrte, aus der Ghostbirth hervorging. Drei Recherchereisen nach Bangkok, 140 Casting-Sessions und ein selbstfinanzierter Testdreh folgten. Ghostbirth 2 ist sein zweiter Spielfilm.",
   },
   gallery: {
-    title: "Galerie",
+    title: "Am Set",
     loadMore: "Mehr Bilder laden",
+    description: "2025 flog Marius Jopen mit 7.000 Euro Eigenmitteln nach Bangkok, veranstaltete ein Casting mit 140 Personen, testete 14 Schauspieler, flog einen Kameramann aus Australien ein und drehte eine Woche lang.",
   },
   footer: {
-    title: "Kontakt",
+    title: "Connect",
     credit: "Ein Film von Marius Jopen \u00b7 Produziert von THE PEOPLE",
     copyright: "\u00a9 2026 THE PEOPLE",
   },
@@ -41,7 +42,7 @@ const de: Translations = {
     story: "Geschichte",
     director: "Regisseur",
     gallery: "Galerie",
-    contact: "Kontakt",
+    contact: "Connect",
   },
   video: {
     soundOn: "TON AN",

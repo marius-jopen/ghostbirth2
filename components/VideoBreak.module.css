@@ -24,11 +24,12 @@
   bottom: 7px;
   right: 4px;
   z-index: 1;
-  opacity: 1;
+  display: none;
 }
 
 @media (min-width: 768px) {
   .soundToggle {
+    display: block;
     opacity: 0;
     transition: opacity 0.3s;
   }

@@ -2,13 +2,14 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
+import Hls from "hls.js";
 import { useLang } from "./LangContext";
 import styles from "./Hero.module.css";
 
+const HERO_VIDEO_SRC = "https://vz-39ea9c43-53e.b-cdn.net/0c3afd0d-893b-475b-83a8-f839ce86af70/playlist.m3u8";
+
 function getTargetHeight() {
   const w = window.innerWidth;
-  // mobile: 4/3, desktop: 20/10
   const ratio = w >= 768 ? 10 / 20 : 3 / 4;
   return w * ratio;
 }
@@ -17,46 +18,30 @@ export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const scrollRef = useRef<HTMLAnchorElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [settled, setSettled] = useState(false);
   const { t } = useLang();
 
-  // Set initial height and animate text in (runs once)
+  // Setup HLS for hero video
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource(HERO_VIDEO_SRC);
+      hls.attachMedia(video);
+      return () => hls.destroy();
+    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+      video.src = HERO_VIDEO_SRC;
+    }
+  }, []);
+
+  // Set initial height for intro
   useEffect(() => {
     const el = heroRef.current;
     if (!el) return;
-
     el.style.height = `${window.innerHeight}px`;
-
-    // Wait for background image to load before revealing
-    let tl: gsap.core.Timeline | null = null;
-    const img = el.querySelector("img");
-    const reveal = () => {
-      document.body.classList.add("ready");
-
-      tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-
-      tl.fromTo(
-        titleRef.current,
-        { opacity: 0, y: 60 },
-        { opacity: 1, y: 0, duration: 2 }
-      ).fromTo(
-        subtitleRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 1.2 },
-        "-=0.6"
-      );
-    };
-
-    if (img && img.complete) {
-      reveal();
-    } else if (img) {
-      img.addEventListener("load", reveal, { once: true });
-    } else {
-      reveal();
-    }
-
-    return () => { if (tl) tl.kill(); };
+    document.body.classList.add("ready");
   }, []);
 
   // Dismiss timer and listeners
@@ -74,58 +59,56 @@ export default function Hero() {
     };
   }, []);
 
+  // Transition from intro to header
   useEffect(() => {
     if (!settled) return;
     const el = heroRef.current;
     if (!el) return;
 
     const targetH = getTargetHeight();
+    el.style.transition = "height 1.2s ease";
+    el.style.height = `${targetH}px`;
 
-    // Set aspect-ratio now so it's ready, but height override keeps control
-    el.style.aspectRatio = window.innerWidth >= 768 ? "20 / 10" : "4 / 3";
+    const onEnd = () => {
+      el.style.transition = "";
+      el.style.height = "";
+      el.style.aspectRatio = window.innerWidth >= 768 ? "20 / 10" : "4 / 3";
+    };
+    el.addEventListener("transitionend", onEnd, { once: true });
 
-    // Animate hero height
-    gsap.to(el, {
-      height: targetH,
-      duration: 1.2,
-      ease: "power2.inOut",
-      onComplete: () => {
-        // Remove height so aspect-ratio takes over (already matches)
-        el.style.height = "";
-      },
-    });
-
-    // Show scroll arrow
-    gsap.set(scrollRef.current, { opacity: 0.5 });
+    return () => el.removeEventListener("transitionend", onEnd);
   }, [settled]);
 
   return (
     <section ref={heroRef} className={styles.hero}>
+      {/* Poster image for intro */}
       <Image
         src="/poster-background.jpg"
         alt=""
         fill
         priority
-        className={styles.background}
+        className={`${styles.background} ${styles.poster} ${settled ? styles.posterHidden : ""}`}
+      />
+
+      {/* Video for after transition */}
+      <video
+        ref={videoRef}
+        className={`${styles.background} ${styles.video} ${settled ? styles.videoVisible : ""}`}
+        autoPlay
+        loop
+        muted
+        playsInline
       />
 
       <div className={styles.content}>
-        <h1 ref={titleRef} className={styles.title} style={{ opacity: 0 }}>
+        <h1 ref={titleRef} className={styles.title}>
           {t.hero.title}
         </h1>
-        <p ref={subtitleRef} className={styles.subtitle} style={{ opacity: 0 }}>
+        <p ref={subtitleRef} className={styles.subtitle}>
           {t.hero.subtitle}
         </p>
       </div>
-      <a
-        ref={scrollRef}
-        href="#logline"
-        className={styles.scroll}
-        aria-label="Scroll down"
-        style={{ opacity: 0 }}
-      >
-        ↓
-      </a>
+
     </section>
   );
 }

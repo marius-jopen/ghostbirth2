@@ -26,11 +26,12 @@ const en = {
     text: "Marius Jopen is a Berlin-based filmmaker and creative technologist. His debut film Space Birth \u2014 a no-budget science fiction film built with 300 volunteers and a spaceship made of cardboard \u2014 screened at Cinema Oasis Bangkok, where it won an award and led to the residency where Ghostbirth originated. Three research trips to Bangkok, 140 casting sessions, and a self-funded test shoot followed. Ghostbirth 2 is his second feature film.",
   },
   gallery: {
-    title: "Gallery",
+    title: "On Set",
     loadMore: "Load more images",
+    description: "In 2025, Marius Jopen flew to Bangkok with 7,000 euros of his own money, ran a casting with 140 people, tested 14 actors, flew in a cinematographer from Australia, and shot for a week.",
   },
   footer: {
-    title: "Contact",
+    title: "Connect",
     credit: "A film by Marius Jopen \u00b7 Produced by THE PEOPLE",
     copyright: "\u00a9 2026 THE PEOPLE",
   },
@@ -39,7 +40,7 @@ const en = {
     story: "Story",
     director: "Director",
     gallery: "Gallery",
-    contact: "Contact",
+    contact: "Connect",
   },
   video: {
     soundOn: "SOUND ON",

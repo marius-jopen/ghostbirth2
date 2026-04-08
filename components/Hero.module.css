@@ -18,6 +18,23 @@
   object-fit: cover;
 }
 
+.poster {
+  z-index: 0;
+  transition: opacity 1s ease;
+}
+
+.posterHidden {
+  opacity: 0;
+}
+
+.video {
+  z-index: -1;
+}
+
+.videoVisible {
+  z-index: -1;
+}
+
 .content {
   text-align: center;
   z-index: 1;
@@ -42,14 +59,24 @@
 
 .scroll {
   position: absolute;
-  bottom: 32px;
-  font-family: var(--font-mono);
-  font-size: 1.5rem;
-  color: var(--white);
-  opacity: 0.5;
+  bottom: 24px;
+  font-family: var(--font-gravity);
+  font-size: clamp(4rem, 8vw, 6rem);
+  color: #ffffff;
   text-decoration: none;
 }
 
 .scroll:hover {
-  opacity: 1;
+  animation: bounce 0.8s ease infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+@media (max-width: 767px) {
+  .scroll {
+    display: none;
+  }
 }
