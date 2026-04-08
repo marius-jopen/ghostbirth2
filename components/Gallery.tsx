@@ -63,6 +63,8 @@ export default function Gallery({ images }: { images: string[] }) {
               768: {
                 fixedHeight: "25vh",
                 gap: 4,
+                snap: false,
+                drag: "free",
               },
             },
           }}

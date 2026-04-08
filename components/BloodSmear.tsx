@@ -10,6 +10,12 @@ export default function BloodSmear() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // Disable on mobile/touch devices
+    if (window.innerWidth < 768 || "ontouchstart" in window) {
+      canvas.style.display = "none";
+      return;
+    }
+
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
