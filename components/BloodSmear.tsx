@@ -124,19 +124,16 @@ export default function BloodSmear() {
       if (!rafId) rafId = requestAnimationFrame(draw);
     };
 
-    let touchDropTimer: ReturnType<typeof setTimeout> | null = null;
-    let lastTouchX = 0;
-    let lastTouchY = 0;
+    let prevTouchClientX = 0;
+    let prevTouchClientY = 0;
+    let hasTouchPrev = false;
 
     const drawDrop = (x: number, y: number) => {
-      // Random blood drop
       const size = Math.random() * 10 + 4;
       ctx.fillStyle = "#ff0000";
       ctx.beginPath();
       ctx.arc(x, y, size, 0, Math.PI * 2);
       ctx.fill();
-
-      // A few tiny satellite drops
       const count = Math.floor(Math.random() * 3) + 1;
       for (let i = 0; i < count; i++) {
         const ox = x + (Math.random() - 0.5) * size * 4;
@@ -151,20 +148,46 @@ export default function BloodSmear() {
     const onTouchMove = (e: TouchEvent) => {
       const touch = e.touches[0];
       if (!touch) return;
-      lastTouchX = touch.clientX;
-      lastTouchY = touch.clientY + window.scrollY;
 
-      // Randomly drop blood (roughly 1 in 8 touch events)
-      if (Math.random() > 0.87) {
-        const jitterX = lastTouchX + (Math.random() - 0.5) * 40;
-        const jitterY = lastTouchY + (Math.random() - 0.5) * 40;
-        drawDrop(jitterX, jitterY);
+      const cx = touch.clientX;
+      const cy = touch.clientY;
+      const x = cx;
+      const y = cy + window.scrollY;
+
+      if (!hasTouchPrev) {
+        prevTouchClientX = cx;
+        prevTouchClientY = cy;
+        prevX = x;
+        prevY = y;
+        hasTouchPrev = true;
+        hasPrev = true;
+        return;
       }
+
+      const dxClient = Math.abs(cx - prevTouchClientX);
+      const dyClient = Math.abs(cy - prevTouchClientY);
+
+      prevTouchClientX = cx;
+      prevTouchClientY = cy;
+
+      // Mostly vertical = scrolling → drop a blood droplet occasionally
+      if (dyClient > dxClient * 3 && dxClient < 8) {
+        if (Math.random() > 0.85) {
+          drawDrop(x + (Math.random() - 0.5) * 30, y);
+        }
+        prevX = x;
+        prevY = y;
+        return;
+      }
+
+      // Horizontal or diagonal = intentional painting → draw stroke
+      pendingDraw = { x, y };
+      if (!rafId) rafId = requestAnimationFrame(draw);
     };
 
     const onTouchEnd = () => {
       hasPrev = false;
-      if (touchDropTimer) clearTimeout(touchDropTimer);
+      hasTouchPrev = false;
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
