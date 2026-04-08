@@ -83,7 +83,7 @@ export default function Hero() {
     <section ref={heroRef} className={styles.hero}>
       {/* Poster image for intro */}
       <Image
-        src="/poster-background.jpg"
+        src="https://ghostbirth2.b-cdn.net/poster-background.jpg"
         alt=""
         fill
         priority

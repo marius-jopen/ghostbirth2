@@ -69,7 +69,7 @@ export default function Gallery({ images }: { images: string[] }) {
           {images.map((src) => (
             <SplideSlide key={src}>
               <img
-                src={`/bts/${src}`}
+                src={`https://ghostbirth2.b-cdn.net/bts/${src}`}
                 alt=""
                 className={styles.image}
                 loading="lazy"
@@ -117,7 +117,7 @@ export default function Gallery({ images }: { images: string[] }) {
               <SplideSlide key={src}>
                 <div className={styles.lightboxSlide}>
                   <img
-                    src={`/bts/${src}`}
+                    src={`https://ghostbirth2.b-cdn.net/bts/${src}`}
                     alt=""
                     className={styles.lightboxImage}
                   />
