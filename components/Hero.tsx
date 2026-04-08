@@ -26,14 +26,23 @@ export default function Hero() {
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+    const onEnded = () => {
+      video.currentTime = 0;
+      video.play();
+    };
+    video.addEventListener("ended", onEnded);
     if (Hls.isSupported()) {
       const hls = new Hls();
       hls.loadSource(HERO_VIDEO_SRC);
       hls.attachMedia(video);
-      return () => hls.destroy();
+      return () => {
+        hls.destroy();
+        video.removeEventListener("ended", onEnded);
+      };
     } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
       video.src = HERO_VIDEO_SRC;
     }
+    return () => video.removeEventListener("ended", onEnded);
   }, []);
 
   // Set initial height for intro

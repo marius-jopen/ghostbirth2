@@ -14,19 +14,29 @@ export default function VideoBreak({ src }: { src: string }) {
     const video = videoRef.current;
     if (!video) return;
 
+    const onEnded = () => {
+      video.currentTime = 0;
+      video.play();
+    };
+    video.addEventListener("ended", onEnded);
+
     if (src.endsWith(".m3u8")) {
       if (Hls.isSupported()) {
         const hls = new Hls();
         hls.loadSource(src);
         hls.attachMedia(video);
-        return () => hls.destroy();
+        return () => {
+          hls.destroy();
+          video.removeEventListener("ended", onEnded);
+        };
       } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-        // Native HLS support (Safari)
         video.src = src;
       }
     } else {
       video.src = src;
     }
+
+    return () => video.removeEventListener("ended", onEnded);
   }, [src]);
 
   const toggleSound = () => {

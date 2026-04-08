@@ -61,7 +61,7 @@ export default function Gallery({ images }: { images: string[] }) {
             drag: true,
             breakpoints: {
               768: {
-                fixedHeight: "25vh",
+                fixedHeight: "50vh",
                 gap: 4,
                 snap: false,
                 drag: "free",
@@ -76,7 +76,7 @@ export default function Gallery({ images }: { images: string[] }) {
                 src={`${cdnPrefix}/bts/${src}`}
                 alt=""
                 className={styles.image}
-                loading="lazy"
+                loading="eager"
                 onClick={openLightbox}
               />
             </SplideSlide>
