@@ -45,19 +45,31 @@ export default function Hero() {
     return () => video.removeEventListener("ended", onEnded);
   }, []);
 
-  // Set initial height for intro
+  // Set initial height for intro, wait for poster to load before showing
   useEffect(() => {
     const el = heroRef.current;
     if (!el) return;
     el.style.height = `${window.innerHeight}px`;
-    document.body.classList.add("ready");
+
+    const img = el.querySelector("img");
+    const show = () => document.body.classList.add("ready");
+
+    if (img && img.complete) {
+      show();
+    } else if (img) {
+      img.addEventListener("load", show, { once: true });
+      // Fallback in case image takes too long
+      setTimeout(show, 2000);
+    } else {
+      show();
+    }
   }, []);
 
   // Dismiss timer and listeners
   useEffect(() => {
     const dismiss = () => setSettled(true);
 
-    const timer = setTimeout(dismiss, 2500);
+    const timer = setTimeout(dismiss, 5000);
     window.addEventListener("scroll", dismiss, { once: true });
     window.addEventListener("click", dismiss, { once: true });
 
