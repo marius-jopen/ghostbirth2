@@ -83,7 +83,7 @@ export default function Hero() {
     <section ref={heroRef} className={styles.hero}>
       {/* Poster image for intro */}
       <Image
-        src="https://ghostbirth2.b-cdn.net/poster-background.jpg"
+        src={`${process.env.NEXT_PUBLIC_CDN_URL || ""}/poster-background.jpg`}
         alt=""
         fill
         priority

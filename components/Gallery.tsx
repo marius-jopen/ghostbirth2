@@ -7,6 +7,8 @@ import "@splidejs/splide/dist/css/splide-core.min.css";
 import { useLang } from "./LangContext";
 import styles from "./Gallery.module.css";
 
+const cdnPrefix = process.env.NEXT_PUBLIC_CDN_URL || "";
+
 export default function Gallery({ images }: { images: string[] }) {
   const { t } = useLang();
   const splideRef = useRef<Splide>(null);
@@ -69,7 +71,7 @@ export default function Gallery({ images }: { images: string[] }) {
           {images.map((src) => (
             <SplideSlide key={src}>
               <img
-                src={`https://ghostbirth2.b-cdn.net/bts/${src}`}
+                src={`${cdnPrefix}/bts/${src}`}
                 alt=""
                 className={styles.image}
                 loading="lazy"
@@ -117,7 +119,7 @@ export default function Gallery({ images }: { images: string[] }) {
               <SplideSlide key={src}>
                 <div className={styles.lightboxSlide}>
                   <img
-                    src={`https://ghostbirth2.b-cdn.net/bts/${src}`}
+                    src={`${cdnPrefix}/bts/${src}`}
                     alt=""
                     className={styles.lightboxImage}
                   />
