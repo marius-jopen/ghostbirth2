@@ -26,23 +26,36 @@ export default function Hero() {
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    const onEnded = () => {
+    let hls: Hls | null = null;
+
+    const forceLoop = () => {
+      if (video.ended || (video.duration && video.currentTime >= video.duration - 0.5)) {
+        video.currentTime = 0;
+        video.play();
+      }
+    };
+    video.addEventListener("ended", forceLoop);
+    video.addEventListener("timeupdate", forceLoop);
+    video.addEventListener("pause", () => {
+      if (!video.ended) return;
       video.currentTime = 0;
       video.play();
-    };
-    video.addEventListener("ended", onEnded);
+    });
+
     if (Hls.isSupported()) {
-      const hls = new Hls();
+      hls = new Hls();
       hls.loadSource(HERO_VIDEO_SRC);
       hls.attachMedia(video);
-      return () => {
-        hls.destroy();
-        video.removeEventListener("ended", onEnded);
-      };
+      hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
     } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
       video.src = HERO_VIDEO_SRC;
     }
-    return () => video.removeEventListener("ended", onEnded);
+
+    return () => {
+      video.removeEventListener("ended", forceLoop);
+      video.removeEventListener("timeupdate", forceLoop);
+      if (hls) hls.destroy();
+    };
   }, []);
 
   // Set initial height for intro, wait for poster to load before showing

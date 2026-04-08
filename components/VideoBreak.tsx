@@ -14,29 +14,37 @@ export default function VideoBreak({ src }: { src: string }) {
     const video = videoRef.current;
     if (!video) return;
 
-    const onEnded = () => {
+    let hls: Hls | null = null;
+
+    const forceLoop = () => {
+      if (video.ended || (video.duration && video.currentTime >= video.duration - 0.5)) {
+        video.currentTime = 0;
+        video.play();
+      }
+    };
+
+    video.addEventListener("ended", forceLoop);
+    video.addEventListener("timeupdate", forceLoop);
+    video.addEventListener("pause", () => {
+      if (!video.ended) return;
       video.currentTime = 0;
       video.play();
-    };
-    video.addEventListener("ended", onEnded);
+    });
 
-    if (src.endsWith(".m3u8")) {
-      if (Hls.isSupported()) {
-        const hls = new Hls();
-        hls.loadSource(src);
-        hls.attachMedia(video);
-        return () => {
-          hls.destroy();
-          video.removeEventListener("ended", onEnded);
-        };
-      } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-        video.src = src;
-      }
+    if (src.endsWith(".m3u8") && Hls.isSupported()) {
+      hls = new Hls();
+      hls.loadSource(src);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
     } else {
       video.src = src;
     }
 
-    return () => video.removeEventListener("ended", onEnded);
+    return () => {
+      video.removeEventListener("ended", forceLoop);
+      video.removeEventListener("timeupdate", forceLoop);
+      if (hls) hls.destroy();
+    };
   }, [src]);
 
   const toggleSound = () => {

@@ -10,12 +10,6 @@ export default function BloodSmear() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Disable on mobile/touch devices
-    if (window.innerWidth < 768 || "ontouchstart" in window) {
-      canvas.style.display = "none";
-      return;
-    }
-
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
@@ -130,11 +124,27 @@ export default function BloodSmear() {
       if (!rafId) rafId = requestAnimationFrame(draw);
     };
 
+    const onTouchMove = (e: TouchEvent) => {
+      if (isScrolling) return;
+      const touch = e.touches[0];
+      if (!touch) return;
+      pendingDraw = { x: touch.clientX, y: touch.clientY + window.scrollY };
+      if (!rafId) rafId = requestAnimationFrame(draw);
+    };
+
+    const onTouchEnd = () => {
+      hasPrev = false;
+    };
+
     window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("mousemove", onMouseMove, { passive: true });
+    document.addEventListener("touchmove", onTouchMove, { passive: true });
+    document.addEventListener("touchend", onTouchEnd, { passive: true });
 
     return () => {
       document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("touchmove", onTouchMove);
+      document.removeEventListener("touchend", onTouchEnd);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", setCanvasSize);
       clearInterval(heightCheck);
