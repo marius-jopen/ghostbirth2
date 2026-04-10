@@ -18,23 +18,6 @@
   object-fit: cover;
 }
 
-.poster {
-  z-index: 0;
-  transition: opacity 1s ease;
-}
-
-.posterHidden {
-  opacity: 0;
-}
-
-.video {
-  z-index: -1;
-}
-
-.videoVisible {
-  z-index: -1;
-}
-
 .content {
   text-align: center;
   z-index: 1;

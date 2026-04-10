@@ -2,11 +2,8 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import Hls from "hls.js";
 import { useLang } from "./LangContext";
 import styles from "./Hero.module.css";
-
-const HERO_VIDEO_SRC = "https://vz-39ea9c43-53e.b-cdn.net/0c3afd0d-893b-475b-83a8-f839ce86af70/playlist.m3u8";
 
 function getTargetHeight() {
   const w = window.innerWidth;
@@ -16,47 +13,8 @@ function getTargetHeight() {
 
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [settled, setSettled] = useState(false);
   const { t } = useLang();
-
-  // Setup HLS for hero video
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    let hls: Hls | null = null;
-
-    const forceLoop = () => {
-      if (video.ended || (video.duration && video.currentTime >= video.duration - 0.5)) {
-        video.currentTime = 0;
-        video.play();
-      }
-    };
-    video.addEventListener("ended", forceLoop);
-    video.addEventListener("timeupdate", forceLoop);
-    video.addEventListener("pause", () => {
-      if (!video.ended) return;
-      video.currentTime = 0;
-      video.play();
-    });
-
-    if (Hls.isSupported()) {
-      hls = new Hls();
-      hls.loadSource(HERO_VIDEO_SRC);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
-    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-      video.src = HERO_VIDEO_SRC;
-    }
-
-    return () => {
-      video.removeEventListener("ended", forceLoop);
-      video.removeEventListener("timeupdate", forceLoop);
-      if (hls) hls.destroy();
-    };
-  }, []);
 
   // Set initial height for intro, wait for poster to load before showing
   useEffect(() => {
@@ -71,7 +29,6 @@ export default function Hero() {
       show();
     } else if (img) {
       img.addEventListener("load", show, { once: true });
-      // Fallback in case image takes too long
       setTimeout(show, 2000);
     } else {
       show();
@@ -115,34 +72,22 @@ export default function Hero() {
 
   return (
     <section ref={heroRef} className={styles.hero}>
-      {/* Poster image for intro */}
       <Image
         src={`${process.env.NEXT_PUBLIC_CDN_URL || ""}/poster-background.jpg`}
         alt=""
         fill
         priority
-        className={`${styles.background} ${styles.poster} ${settled ? styles.posterHidden : ""}`}
-      />
-
-      {/* Video for after transition */}
-      <video
-        ref={videoRef}
-        className={`${styles.background} ${styles.video} ${settled ? styles.videoVisible : ""}`}
-        autoPlay
-        loop
-        muted
-        playsInline
+        className={styles.background}
       />
 
       <div className={styles.content}>
-        <h1 ref={titleRef} className={styles.title}>
+        <h1 className={styles.title}>
           {t.hero.title}
         </h1>
-        <p ref={subtitleRef} className={styles.subtitle}>
+        <p className={styles.subtitle}>
           {t.hero.subtitle}
         </p>
       </div>
-
     </section>
   );
 }

@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   title: "Ghostbirth 2 — A Film by Marius Jopen",
   description:
     "Ghostbirth 2 is a slow-burn body horror film set in Bangkok by Marius Jopen.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({

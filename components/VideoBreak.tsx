@@ -1,14 +1,11 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import Hls from "hls.js";
-import { useLang } from "./LangContext";
 import styles from "./VideoBreak.module.css";
 
 export default function VideoBreak({ src }: { src: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [muted, setMuted] = useState(true);
-  const { t } = useLang();
 
   useEffect(() => {
     const video = videoRef.current;
@@ -47,13 +44,6 @@ export default function VideoBreak({ src }: { src: string }) {
     };
   }, [src]);
 
-  const toggleSound = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setMuted(videoRef.current.muted);
-    }
-  };
-
   return (
     <section className={styles.wrapper}>
       <video
@@ -64,13 +54,6 @@ export default function VideoBreak({ src }: { src: string }) {
         muted
         playsInline
       />
-      <button
-        className={`pill-btn ${styles.soundToggle}`}
-        onClick={toggleSound}
-        aria-label={muted ? "Unmute" : "Mute"}
-      >
-        {muted ? t.video.soundOn : t.video.soundOff}
-      </button>
     </section>
   );
 }
