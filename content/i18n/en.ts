@@ -2,7 +2,7 @@ const en = {
   hero: {
     title: "Ghostbirth 2",
     subtitle: "A film by Marius Jopen",
-    status: "Currently in production",
+    status: "Currently in development",
   },
   logline:
     "Elena can\u2019t have children. She flies to Bangkok for a massage that makes infertile women pregnant. She doesn\u2019t know a pregnant woman burned alive in the house thirty years ago. Or that women disappear inside. She gets pregnant. The child is not hers.",

@@ -4,7 +4,7 @@ const de: Translations = {
   hero: {
     title: "Ghostbirth 2",
     subtitle: "Ein Film von Marius Jopen",
-    status: "Derzeit in Produktion",
+    status: "Derzeit in Entwicklung",
   },
   logline:
     "Elena kann keine Kinder bekommen. Sie fliegt nach Bangkok zu einer Massage, die unfruchtbare Frauen schwanger macht. Sie wei\u00df nicht, dass vor drei\u00dfig Jahren eine Schwangere in dem Haus verbrannt ist. Oder dass Frauen darin verschwinden. Sie wird schwanger. Aber das Kind geh\u00f6rt nicht ihr.",
