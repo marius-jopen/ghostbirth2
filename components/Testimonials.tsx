@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useLang } from "./LangContext";
 import styles from "./Testimonials.module.css";
 
 const testimonials = [
@@ -10,6 +11,7 @@ const testimonials = [
 ];
 
 export default function Testimonials() {
+  const { t: lang } = useLang();
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
 
@@ -28,7 +30,7 @@ export default function Testimonials() {
 
   return (
     <section className={styles.section}>
-      <h2 className="section-title">Voices</h2>
+      <h2 className="section-title">{lang.testimonials.title}</h2>
       <div className={`${styles.testimonial} ${visible ? styles.visible : styles.hidden}`}>
         <p className={styles.quote}>&ldquo;{t.quote}&rdquo;</p>
         <p className={styles.author}>&mdash; {t.author}</p>

@@ -40,6 +40,13 @@
   margin-top: 16px;
 }
 
+.status {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono);
+  color: var(--white);
+  margin-top: 8px;
+}
+
 .scroll {
   position: absolute;
   bottom: 24px;

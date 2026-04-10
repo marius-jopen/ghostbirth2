@@ -87,6 +87,9 @@ export default function Hero() {
         <p className={styles.subtitle}>
           {t.hero.subtitle}
         </p>
+        <p className={styles.status}>
+          {t.hero.status}
+        </p>
       </div>
     </section>
   );

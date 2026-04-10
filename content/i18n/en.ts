@@ -2,33 +2,40 @@ const en = {
   hero: {
     title: "Ghostbirth 2",
     subtitle: "A film by Marius Jopen",
+    status: "Currently in production",
   },
   logline:
-    "Elena can\u2019t have children. She flies to Bangkok for a fertility massage at a place where infertile women leave pregnant. She doesn\u2019t know that thirty years ago a pregnant woman burned alive in the house, that the neighborhood calls it cursed, or that women disappear inside. She gets pregnant. The child is not hers.",
+    "Elena can\u2019t have children. She flies to Bangkok for a massage that makes infertile women pregnant. She doesn\u2019t know a pregnant woman burned alive in the house thirty years ago. Or that women disappear inside. She gets pregnant. The child is not hers.",
   about: {
     title: "About",
     paragraphs: [
-      "Ghostbirth 2 is a slow-burn body horror film set in Bangkok. A German woman travels to Thailand for a fertility massage \u2014 and enters a building that is no longer a building. It is a ghost. A machine that uses living women to deliver the children of a dead woman who burned inside it thirty years ago.",
-      "The film explores the dark side of motherhood \u2014 the desperation, the societal pressure, the willingness to accept anything at any cost. Elena knows what is growing inside her. She chooses to keep it.",
-      "Practical effects. No CGI. No AI-generated imagery. Built by hand, on set, with latex and light and sweat.",
+      "Ghost Birth 2 is a horror film about motherhood. Not the version you see on social media: Glowing, beautiful, fulfilled. The other version. The desperation. The pressure. The willingness to accept anything, from anyone, just to become a mother.",
+      "Set entirely in Bangkok. Built by hand. Latex, prosthetics and a lot of blood.",
+      "First test shoot completed in 2025. Currently in development financing with a target production date of late 2026.",
     ],
   },
   story: {
     title: "The Story",
     paragraphs: [
-      "Elena, a German woman who cannot have children, travels to Bangkok for a fertility massage at a studio with a reputation for making infertile women pregnant. The house burned down thirty years ago with a pregnant woman inside. It was rebuilt, but in the neighborhood everyone knows: the place is cursed, the ghost never left, women disappear. Elena knows none of this.",
-      "The treatment works. But the child she carries belongs to the woman who died in the fire.",
-      "Saul, a taxi driver who brought Elena to the studio, begins to piece together what the house really is. He tries to get her out. She refuses. After everything she has been through \u2014 the years of failure, the shame, the pressure \u2014 she is not giving up this child. Not for Saul, not for the truth, not for her own life.",
+      "Elena, a German woman, arrives in Bangkok after years of failed fertility treatments. She has heard of a massage studio that can cure infertile women. What she doesn\u2019t know: thirty years ago, a pregnant woman died in a fire in this house.",
+      "Saul, a taxi driver haunted by his failure to step up when family needed him, drops Elena off and senses something wrong. When he returns with documents she left behind, the receptionist tells him no one named Elena is here.",
+      "Inside, Elena surrenders to the treatment. The masseuses wash her feet, feed her a thick red drink, massage her with hands that feel impossibly deep. Her body begins to change. Her belly swells.",
+      "When she discovers a hidden room of living flesh in the basement, she tries to flee. But the child inside her revolts, pulling her back into the house.",
+      "Saul follows the masseuses to a cemetery and witnesses a ritual at the grave of the woman who burned. He realizes Elena is carrying a dead woman\u2019s child. He returns to save her.",
     ],
   },
   director: {
     title: "Director",
     text: "Marius Jopen is a Berlin-based filmmaker and creative technologist. His debut film Space Birth \u2014 a no-budget science fiction film built with 300 volunteers and a spaceship made of cardboard \u2014 screened at Cinema Oasis Bangkok, where it won an award and led to the residency where Ghostbirth originated. Three research trips to Bangkok, 140 casting sessions, and a self-funded test shoot followed. Ghostbirth 2 is his second feature film.",
   },
+  statusLine: "Currently seeking co-production partners and financing. Target shoot: Bangkok, late 2026.",
   gallery: {
-    title: "On Set",
+    title: "Test Shoot",
     loadMore: "Load more images",
-    description: "In 2025, Marius Jopen flew to Bangkok with 7,000 euros of his own money, ran a casting with 140 people, tested 14 actors, flew in a cinematographer from Australia, and shot for a week.",
+    description: "In 2025, Marius Jopen flew to Bangkok with 7,000 euros of his own money, cast 140 people, tested 14 actors, flew in cinematographer Nathan Ceddia from Australia, and shot for a week in massage studios across the city.",
+  },
+  testimonials: {
+    title: "Voices",
   },
   footer: {
     title: "Connect",

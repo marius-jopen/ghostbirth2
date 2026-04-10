@@ -3,7 +3,7 @@
   top: 16px;
   left: 50%;
   transform: translateX(-50%) translateY(-60px);
-  z-index: 900;
+  z-index: 9999;
   display: flex;
   gap: 0;
   background: rgba(0, 0, 0, 0.85);

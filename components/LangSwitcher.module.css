@@ -1,8 +1,9 @@
 .switcher {
   position: fixed;
   bottom: 12px;
-  right: 12px;
-  z-index: 900;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
   display: flex;
   align-items: center;
   gap: 2px;
@@ -13,14 +14,6 @@
   padding: 4px 10px 6px;
 }
 
-@media (max-width: 767px) {
-  .switcher {
-    right: auto;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-}
-
 .btn {
   background: none;
   border: none;
@@ -29,15 +22,14 @@
   font-size: 0.7rem;
   cursor: pointer;
   padding: 4px 6px;
-  opacity: 0.4;
 }
 
 .btn:hover {
-  opacity: 0.8;
+  color: #ff0000;
 }
 
 .active {
-  opacity: 1;
+  color: #ff0000;
 }
 
 .sep {
