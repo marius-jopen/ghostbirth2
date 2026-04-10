@@ -30,7 +30,7 @@ export const metadata: Metadata = {
       "A horror movie set in Bangkok. Written and directed by Marius Jopen. Currently in development.",
     images: [
       {
-        url: "/ghostbirth2.png",
+        url: "/ghostbirth2.jpg",
         width: 1200,
         height: 630,
         alt: "GHOSTBIRTH 2 — A Film by Marius Jopen",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title: "GHOSTBIRTH 2 — A Film by Marius Jopen",
     description:
       "A horror movie set in Bangkok. Written and directed by Marius Jopen. Currently in development.",
-    images: ["/ghostbirth2.png"],
+    images: ["/ghostbirth2.jpg"],
   },
 };
 
