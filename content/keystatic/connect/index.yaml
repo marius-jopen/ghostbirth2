@@ -1,0 +1,27 @@
+topVideo:
+  src: >-
+    https://vz-39ea9c43-53e.b-cdn.net/08ad4c9c-2388-4b7d-9b91-2dbd60ef21f3/playlist.m3u8
+  label: BTS · BKK · 03
+sectionLabelNum: '05'
+sectionLabel: Connect
+title: |-
+  Come closer,
+  *carefully.*
+lede: >-
+  For industry inquiries, press, or anything ghostly. The newsletter goes out
+  when there is something worth saying.
+formTitle: Ghostly News
+formSub: Occasional updates from the production.
+roleLabel: I am a…
+emailLabel: Email · sacrifice it
+emailPlaceholder: you@somewhere.haunted
+submitLabel: Subscribe to Ghostly News
+submitDoneLabel: The letters will find you
+roles:
+  - Producer
+  - Sales Agent
+  - Distributor
+  - Press
+  - Actor
+  - Fan
+  - Other

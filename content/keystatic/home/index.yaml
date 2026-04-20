@@ -1,0 +1,154 @@
+hero:
+  tag: A Film by Marius Jopen · In Development
+  titleLine1: Ghost
+  titleLine2Primary: birth
+  titleLine2Accent: '2'
+  sub: BODY HORROR · BANGKOK · 90 MIN
+  lede: >-
+    **Elena can't have children.** She flies to Bangkok for a fertility massage
+    at a place with a reputation for making infertile women pregnant. She
+    doesn't know that thirty years ago a pregnant woman burned alive in the
+    house, that the neighborhood calls it cursed, or that women disappear
+    inside. She gets pregnant. *The child is not hers.*
+  ctaPrimaryLabel: For Producers
+  ctaPrimaryHref: /pitch
+  ctaGhostLabel: Director's Statement
+  ctaGhostHref: '#statement'
+  posterImage: /cms/hero/hero/posterImage.jpg
+  stats:
+    - label: Status
+      value: In Development
+    - label: Budget
+      value: 100–150K €
+    - label: Shoot
+      value: Bangkok 2026
+    - label: Producer
+      value: The People
+about:
+  sectionLabelNum: '01'
+  sectionLabel: About
+  title: She *stays.*
+  paragraphs:
+    - >-
+      Not the version you see on social media. *The other version.* The
+      desperation. The pressure. The willingness to accept anything to become a
+      mother.
+    - Shot in Bangkok. Latex, prosthetics, blood. **No CGI. No AI.**
+  pullQuote: >-
+    The pressure to become a mother is so great that a woman would rather carry
+    a dead woman's child than go home empty.
+  referencesHeading: References
+  references:
+    - '*Argento*'
+    - '*Cronenberg*'
+    - '*Scorsese*'
+  methodHeading: Method
+  materials:
+    - text: Latex
+      hot: true
+    - text: Prosthetics
+      hot: false
+    - text: In-camera
+      hot: true
+    - text: Blood
+      hot: false
+    - text: Bangkok
+      hot: false
+  videoAfter:
+    src: >-
+      https://vz-39ea9c43-53e.b-cdn.net/12bfc0b2-d02a-489d-81c2-6787b286dfba/playlist.m3u8
+    label: BTS · BKK · 01
+statement:
+  sectionLabelNum: '02'
+  sectionLabel: Director's Statement
+  title: |-
+    It happened
+    to *me.*
+  meta: Marius Jopen · Berlin · 2025
+  pdfLabel: → Full Statement (PDF)
+  paragraphs:
+    - I didn't come up with Ghost Birth. *It happened to me.*
+    - >-
+      In 2023, my first film screened at Foundation Cinema Oasis in Bangkok. I went to a
+      massage studio nearby almost every day. After thirty sessions, Ing asked
+      me if I knew the history of the building. I didn't. *She told me that
+      thirty years ago, a pregnant woman had burned alive inside the house.* The
+      locals avoid the place. That is why there are no Thai customers.
+    - >-
+      I had been lying on that floor for a month. *Inside a ghost story I didn't
+      know I was part of.*
+    - >-
+      The first version of this film was about a man who runs from fatherhood.
+      That man was me. The film has changed. It is no longer about a man who
+      runs. **It is about a woman who stays.** Elena knows what is growing
+      inside her. She knows the child belongs to a ghost. She knows the house is
+      a machine. And she chooses to keep it.
+    - >-
+      All effects will be practical. *Built by hand, on set, with latex and
+      light and sweat.*
+  signature: — M. Jopen
+  videoAfter:
+    src: >-
+      https://vz-39ea9c43-53e.b-cdn.net/8c06b352-57bc-4bec-8204-ffaab57f4089/playlist.m3u8
+    label: BTS · BKK · 02
+gallery:
+  sectionLabelNum: '03'
+  sectionLabel: Test Shoot · Bangkok 2025
+  title: One week. *Two people.*
+  facts:
+    - value: '140'
+      label: Auditions
+    - value: '14'
+      label: Actors tested
+    - value: 7K€
+      label: Self-funded
+    - value: N. Ceddia
+      label: Cinematographer
+  images:
+    - /cms/film-test-shoot/gallery/images/0.jpg
+    - /cms/film-test-shoot/gallery/images/1.jpeg
+    - /cms/film-test-shoot/gallery/images/2.jpeg
+    - /cms/film-test-shoot/gallery/images/3.jpeg
+    - /cms/film-test-shoot/gallery/images/4.jpeg
+    - /cms/film-test-shoot/gallery/images/5.jpeg
+    - /cms/film-test-shoot/gallery/images/6.JPG
+    - /cms/film-test-shoot/gallery/images/7.jpeg
+    - /cms/film-test-shoot/gallery/images/8.jpeg
+    - /cms/film-test-shoot/gallery/images/9.jpeg
+    - /cms/film-test-shoot/gallery/images/10.jpg
+    - /cms/film-test-shoot/gallery/images/11.jpg
+director:
+  sectionLabelNum: '04'
+  sectionLabel: Director
+  title: Marius *Jopen.*
+  portraitImage: /cms/director/director/portraitImage.jpg
+  paragraphs:
+    - >-
+      Berlin-based filmmaker. His first feature *Space Birth* — a no-budget
+      science fiction film built with 300 volunteers and a spaceship made of
+      cardboard — won the *Most Shocking Stoner Movie Prize* at Foundation
+      Cinema Oasis Bangkok. The residency there is where Ghostbirth 2 began.
+    - Ghostbirth 2 is his second feature.
+  stats:
+    - value: '300'
+      label: |-
+        Volunteers
+        Space Birth
+    - value: '01'
+      label: |-
+        Most Shocking Stoner
+        Movie Prize
+    - value: '02'
+      label: |-
+        Features
+        to date
+  videoAfter:
+    src: >-
+      https://vz-39ea9c43-53e.b-cdn.net/24c758f2-9f63-4125-ad9c-0dcf22892714/playlist.m3u8
+invite:
+  title: Are you a *producer?*
+  body: >-
+    Body horror. Bangkok. 100,000–150,000 EUR. In development. Seeking
+    co-production partners.
+  ctaLabel: Enter the Production Room
+  ctaHref: /pitch

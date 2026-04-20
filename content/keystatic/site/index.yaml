@@ -1,0 +1,58 @@
+nav:
+  brandPrimary: Ghostbirth
+  brandAccent: "2"
+  links:
+    - label: The Film
+      href: "/#about"
+    - label: Statement
+      href: "/#statement"
+    - label: Test Shoot
+      href: "/#gallery"
+    - label: Director
+      href: "/#director"
+    - label: Connect
+      href: /connect
+  producersLabel: "→ For Producers"
+  producersHref: /pitch
+contact:
+  email: contact@ghostbirth2.com
+  phone: "+49 176 233 670 79"
+  phoneDigits: "+4917623367079"
+  instagramHandle: "@ghostbirth_2"
+  instagramUrl: https://www.instagram.com/ghostbirth_2/
+footer:
+  wordmarkLine1: Ghost
+  wordmarkLine2Primary: birth
+  wordmarkLine2Accent: "2"
+  side: >-
+    A horror film about motherhood. Shot in Bangkok. Directed by Marius Jopen.
+    Produced by The People.
+  blocks:
+    - heading: Film
+      lines:
+        - text: Ghostbirth 2
+          href: ""
+        - text: "Body Horror · Feature · 90min"
+          href: ""
+        - text: "In Development · Target 2026"
+          href: ""
+    - heading: Reach
+      lines:
+        - text: contact@ghostbirth2.com
+          href: "mailto:contact@ghostbirth2.com"
+        - text: "+49 176 233 670 79"
+          href: "tel:+4917623367079"
+        - text: "Instagram · @ghostbirth_2"
+          href: https://www.instagram.com/ghostbirth_2/
+    - heading: Downloads
+      lines:
+        - text: One-Pager (PDF)
+          href: ""
+        - text: Lookbook (PDF, 14pp)
+          href: ""
+        - text: Treatment (PDF, 7pp)
+          href: ""
+  bottomLines:
+    - "© 2026 The People"
+    - A Film by Marius Jopen
+    - Berlin ↔ Bangkok

@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
+import BloodSmear from "@/components/BloodSmear";
+import { getSite } from "@/lib/content";
 import "./globals.css";
 
 const gravity = localFont({
@@ -46,14 +50,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const site = await getSite();
   return (
     <html lang="en" className={`${gravity.variable} ${mono.variable}`}>
-      <body>{children}</body>
+      <body className="grain">
+        <BloodSmear />
+        <Nav nav={site.nav} />
+        {children}
+        <Footer footer={site.footer} />
+      </body>
     </html>
   );
 }

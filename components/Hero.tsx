@@ -1,95 +1,66 @@
-"use client";
-
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import styles from "./Hero.module.css";
-
-function getTargetHeight() {
-  const w = window.innerWidth;
-  const ratio = w >= 768 ? 10 / 20 : 3 / 4;
-  return w * ratio;
-}
+import Link from "next/link";
+import { emph } from "@/lib/emph";
 
 type HeroContent = {
-  title: string;
-  subtitle: string;
-  status: string;
+  tag: string;
+  titleLine1: string;
+  titleLine2Primary: string;
+  titleLine2Accent: string;
+  sub: string;
+  lede: string;
+  ctaPrimaryLabel: string;
+  ctaPrimaryHref: string;
+  ctaGhostLabel: string;
+  ctaGhostHref: string;
   posterImage: string | null;
+  stats: readonly { label: string; value: string }[];
 };
 
 export default function Hero({ hero }: { hero: HeroContent }) {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const [settled, setSettled] = useState(false);
-
-  useEffect(() => {
-    const el = heroRef.current;
-    if (!el) return;
-    el.style.height = `${window.innerHeight}px`;
-
-    const img = el.querySelector("img");
-    const show = () => document.body.classList.add("ready");
-
-    if (img && img.complete) {
-      show();
-    } else if (img) {
-      img.addEventListener("load", show, { once: true });
-      setTimeout(show, 2000);
-    } else {
-      show();
-    }
-  }, []);
-
-  useEffect(() => {
-    const dismiss = () => setSettled(true);
-
-    const timer = setTimeout(dismiss, 5000);
-    window.addEventListener("scroll", dismiss, { once: true });
-    window.addEventListener("click", dismiss, { once: true });
-
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("scroll", dismiss);
-      window.removeEventListener("click", dismiss);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!settled) return;
-    const el = heroRef.current;
-    if (!el) return;
-
-    const targetH = getTargetHeight();
-    el.style.transition = "height 1.2s ease";
-    el.style.height = `${targetH}px`;
-
-    const onEnd = () => {
-      el.style.transition = "";
-      el.style.height = "";
-      el.style.aspectRatio = window.innerWidth >= 768 ? "20 / 10" : "4 / 3";
-    };
-    el.addEventListener("transitionend", onEnd, { once: true });
-
-    return () => el.removeEventListener("transitionend", onEnd);
-  }, [settled]);
-
-  const posterSrc = hero.posterImage ?? "/poster-background.jpg";
-  const cdnPrefix = process.env.NEXT_PUBLIC_CDN_URL || "";
-
+  const poster = hero.posterImage ?? "/poster-background.jpg";
   return (
-    <section ref={heroRef} className={styles.hero}>
-      <Image
-        src={`${cdnPrefix}${posterSrc}`}
-        alt=""
-        fill
-        priority
-        className={styles.background}
-      />
-
-      <div className={styles.content}>
-        <h1 className={styles.title}>{hero.title}</h1>
-        <p className={styles.subtitle}>{hero.subtitle}</p>
-        <p className={styles.status}>{hero.status}</p>
+    <header className="hero" id="top">
+      <div className="hero-bg">
+        <div className="poster" style={{ backgroundImage: `url(${poster})` }} />
+        <div className="veil" />
       </div>
-    </section>
+      <div className="wrap hero-inner">
+        <div className="hero-meta">
+          <div className="hero-tag">
+            <span className="dot" />
+            {hero.tag}
+          </div>
+          <h1>
+            {hero.titleLine1}
+            <br />
+            {hero.titleLine2Primary} <span className="two">{hero.titleLine2Accent}</span>
+          </h1>
+          {hero.sub && <div className="hero-sub">{hero.sub}</div>}
+          {hero.lede && <p className="hero-lede">{emph(hero.lede)}</p>}
+          <div className="cta-row">
+            {hero.ctaPrimaryLabel && (
+              <Link href={hero.ctaPrimaryHref} className="cta primary">
+                {hero.ctaPrimaryLabel} <span className="arrow">→</span>
+              </Link>
+            )}
+            {hero.ctaGhostLabel && (
+              <a href={hero.ctaGhostHref} className="cta ghost">
+                {hero.ctaGhostLabel}
+              </a>
+            )}
+          </div>
+        </div>
+        {hero.stats?.length > 0 && (
+          <div className="hero-stats">
+            {hero.stats.map((s, i) => (
+              <div className="row" key={i}>
+                <span>{s.label}</span>
+                <b>{s.value}</b>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </header>
   );
 }

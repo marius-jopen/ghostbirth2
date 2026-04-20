@@ -1,38 +1,36 @@
-import styles from "./Status.module.css";
+import { emph } from "@/lib/emph";
 
-const items = [
-  { label: "Story & Treatment", status: "Complete", done: true },
-  { label: "Test Shoot Bangkok", status: "Complete", done: true },
-  { label: "140 Casting Sessions", status: "Complete", done: true },
-  { label: "Market Submissions 2026", status: "In Progress", done: false },
-  {
-    label: "Principal Photography",
-    status: "Bangkok, Oct/Nov 2026",
-    done: false,
-  },
-  { label: "Post-Production", status: "Early 2027", done: false },
-];
+type StatusContent = {
+  sectionLabelNum: string;
+  sectionLabel: string;
+  title: string;
+  cards: readonly { heading: string; body: string }[];
+  seekingTitle: string;
+  seekingBody: string;
+};
 
-export default function Status() {
+export default function Status({ status }: { status: StatusContent }) {
   return (
-    <section className="section">
-      <h2 className="section-title">Status</h2>
-      <div className={styles.timeline}>
-        {items.map((item, i) => (
-          <div
-            key={item.label}
-            className={`${styles.step} ${item.done ? styles.done : styles.upcoming}`}
-          >
-            <div className={styles.marker}>
-              <div className={styles.dot} />
-              {i < items.length - 1 && <div className={styles.line} />}
+    <section id="status">
+      <div className="wrap">
+        <div className="section-label">
+          <span className="num">{status.sectionLabelNum}</span>
+          <span>{status.sectionLabel}</span>
+          <span className="bar" />
+        </div>
+        <h2 className="big">{emph(status.title)}</h2>
+        <div className="status-grid">
+          {status.cards.map((card, i) => (
+            <div className="status-card" key={i}>
+              <h4>{card.heading}</h4>
+              <p>{emph(card.body)}</p>
             </div>
-            <div className={styles.content}>
-              <span className={styles.label}>{item.label}</span>
-              <span className={styles.status}>{item.status}</span>
-            </div>
+          ))}
+          <div className="status-card wide">
+            <div className="seeking">{emph(status.seekingTitle)}</div>
+            <p style={{ maxWidth: 640, marginTop: 16 }}>{emph(status.seekingBody)}</p>
           </div>
-        ))}
+        </div>
       </div>
     </section>
   );

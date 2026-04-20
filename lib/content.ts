@@ -4,26 +4,22 @@ import keystaticConfig from "@/keystatic.config";
 
 export const reader = createReader(process.cwd(), keystaticConfig);
 
-export async function getContent() {
-  const [hero, logline, about, story, director, gallery, testimonials, footer, nav, videos] =
-    await Promise.all([
-      reader.singletons.hero.read(),
-      reader.singletons.logline.read(),
-      reader.singletons.about.read(),
-      reader.singletons.story.read(),
-      reader.singletons.director.read(),
-      reader.singletons.gallery.read(),
-      reader.singletons.testimonials.read(),
-      reader.singletons.footer.read(),
-      reader.singletons.nav.read(),
-      reader.singletons.videos.read(),
-    ]);
-
-  if (!hero || !logline || !about || !story || !director || !gallery || !testimonials || !footer || !nav || !videos) {
-    throw new Error("Missing Keystatic content. Visit /keystatic to create it.");
-  }
-
-  return { hero, logline, about, story, director, gallery, testimonials, footer, nav, videos };
+async function requireSingleton<T>(name: string, read: () => Promise<T | null>): Promise<T> {
+  const value = await read();
+  if (!value) throw new Error(`Missing Keystatic singleton "${name}". Visit /keystatic to create it.`);
+  return value;
 }
 
-export type SiteContent = Awaited<ReturnType<typeof getContent>>;
+export const getSite = () =>
+  requireSingleton("site", () => reader.singletons.site.read());
+export const getHome = () =>
+  requireSingleton("home", () => reader.singletons.home.read());
+export const getPitch = () =>
+  requireSingleton("pitch", () => reader.singletons.pitch.read());
+export const getConnect = () =>
+  requireSingleton("connect", () => reader.singletons.connect.read());
+
+export type SiteContent = Awaited<ReturnType<typeof getSite>>;
+export type HomeContent = Awaited<ReturnType<typeof getHome>>;
+export type PitchContent = Awaited<ReturnType<typeof getPitch>>;
+export type ConnectContent = Awaited<ReturnType<typeof getConnect>>;

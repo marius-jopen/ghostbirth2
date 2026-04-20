@@ -1,135 +1,63 @@
 "use client";
 
-import { useState } from "react";
-import styles from "./Footer.module.css";
+import { usePathname } from "next/navigation";
+
+type FooterBlock = {
+  heading: string;
+  lines: readonly { text: string; href: string | null }[];
+};
 
 type FooterContent = {
-  title: string;
-  email: string;
-  instagramUrl: string | null;
-  substackEmbedUrl: string | null;
-  credit: string;
-  copyright: string;
+  wordmarkLine1: string;
+  wordmarkLine2Primary: string;
+  wordmarkLine2Accent: string;
+  side: string;
+  blocks: readonly FooterBlock[];
+  bottomLines: readonly string[];
 };
 
 export default function Footer({ footer }: { footer: FooterContent }) {
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const data = new FormData(form);
-
-    try {
-      await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: data.get("name"),
-          email: data.get("email"),
-          role: data.get("role"),
-          message: data.get("message"),
-        }),
-      });
-      setSubmitted(true);
-    } catch {
-      setSubmitted(true);
-    }
-  };
+  const pathname = usePathname();
+  if (pathname?.startsWith("/keystatic")) return null;
 
   return (
-    <footer id="contact" className={styles.footer}>
-      <h2 className="section-title">{footer.title}</h2>
-
-      <div className={styles.links}>
-        <a href={`mailto:${footer.email}`} className={styles.link}>
-          {footer.email}
-        </a>
-        {footer.instagramUrl && (
-          <a
-            href={footer.instagramUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.link}
-          >
-            <svg
-              className={styles.icon}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-            </svg>
-            Instagram
-          </a>
-        )}
-      </div>
-
-      {!submitted ? (
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            required
-            className={styles.input}
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            required
-            className={styles.input}
-          />
-          <select name="role" required className={styles.select} defaultValue="">
-            <option value="" disabled>
-              I am a...
-            </option>
-            <option value="Producer">Producer</option>
-            <option value="Sales Agent">Sales Agent</option>
-            <option value="Distributor">Distributor</option>
-            <option value="Press">Press</option>
-            <option value="Actor">Actor</option>
-            <option value="Fan">Fan</option>
-            <option value="Other">Other</option>
-          </select>
-          <textarea
-            name="message"
-            placeholder="Message"
-            rows={4}
-            className={styles.textarea}
-          />
-          <button type="submit" className={styles.submit}>
-            Sacrifice your email
-          </button>
-        </form>
-      ) : (
-        <p className={styles.thanks}>Message sent.</p>
-      )}
-
-      {footer.substackEmbedUrl && (
-        <div className={styles.substack}>
-          <p className={styles.substackLabel}>Ghostly News</p>
-          <div className={styles.substackWrap}>
-            <iframe
-              src={footer.substackEmbedUrl}
-              width="480"
-              height="320"
-              className={styles.substackEmbed}
-              frameBorder="0"
-              scrolling="no"
-            />
+    <footer className="site-footer">
+      <div className="wrap">
+        <div className="foot-top">
+          <div className="wordmark">
+            {footer.wordmarkLine1}
+            <br />
+            {footer.wordmarkLine2Primary} <em>{footer.wordmarkLine2Accent}</em>
           </div>
+          <div className="side">{footer.side}</div>
         </div>
-      )}
-
-      <p className={styles.credit}>{footer.credit}</p>
-      <p className={styles.copyright}>{footer.copyright}</p>
+        <div className="foot-grid">
+          {footer.blocks.map((block, i) => (
+            <div className="block" key={i}>
+              <h4>{block.heading}</h4>
+              {block.lines.map((line, j) =>
+                line.href ? (
+                  <a
+                    key={j}
+                    href={line.href}
+                    target={line.href.startsWith("http") ? "_blank" : undefined}
+                    rel={line.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  >
+                    {line.text}
+                  </a>
+                ) : (
+                  <p key={j}>{line.text}</p>
+                )
+              )}
+            </div>
+          ))}
+        </div>
+        <div className="foot-bottom">
+          {footer.bottomLines.map((l, i) => (
+            <span key={i}>{l}</span>
+          ))}
+        </div>
+      </div>
     </footer>
   );
 }

@@ -2,58 +2,61 @@
 
 import { useRef, useEffect } from "react";
 import Hls from "hls.js";
-import styles from "./VideoBreak.module.css";
 
-export default function VideoBreak({ src }: { src: string }) {
+type VideoBreakContent = {
+  src: string | null;
+  label: string;
+};
+
+export default function VideoBreak({ video }: { video: VideoBreakContent }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const src = video.src || "";
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
+    if (!src) return;
+    const videoEl = videoRef.current;
+    if (!videoEl) return;
 
     let hls: Hls | null = null;
 
     const forceLoop = () => {
-      if (video.ended || (video.duration && video.currentTime >= video.duration - 0.5)) {
-        video.currentTime = 0;
-        video.play();
+      if (videoEl.ended || (videoEl.duration && videoEl.currentTime >= videoEl.duration - 0.5)) {
+        videoEl.currentTime = 0;
+        videoEl.play();
       }
     };
 
-    video.addEventListener("ended", forceLoop);
-    video.addEventListener("timeupdate", forceLoop);
-    video.addEventListener("pause", () => {
-      if (!video.ended) return;
-      video.currentTime = 0;
-      video.play();
-    });
+    videoEl.addEventListener("ended", forceLoop);
+    videoEl.addEventListener("timeupdate", forceLoop);
 
     if (src.endsWith(".m3u8") && Hls.isSupported()) {
       hls = new Hls();
       hls.loadSource(src);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+      hls.attachMedia(videoEl);
+      hls.on(Hls.Events.MANIFEST_PARSED, () => videoEl.play());
     } else {
-      video.src = src;
+      videoEl.src = src;
     }
 
     return () => {
-      video.removeEventListener("ended", forceLoop);
-      video.removeEventListener("timeupdate", forceLoop);
+      videoEl.removeEventListener("ended", forceLoop);
+      videoEl.removeEventListener("timeupdate", forceLoop);
       if (hls) hls.destroy();
     };
   }, [src]);
 
+  const isPlaceholder = !src;
+
   return (
-    <section className={styles.wrapper}>
-      <video
-        ref={videoRef}
-        className={styles.video}
-        autoPlay
-        loop
-        muted
-        playsInline
-      />
+    <section className={`video-break ${isPlaceholder ? "placeholder-red" : ""}`}>
+      {!isPlaceholder && (
+        <video ref={videoRef} autoPlay loop muted playsInline />
+      )}
+      {isPlaceholder ? (
+        <span className="ph-label">VIDEO · {video.label || "PLACEHOLDER"}</span>
+      ) : (
+        <span className="vlabel">{video.label}</span>
+      )}
     </section>
   );
 }

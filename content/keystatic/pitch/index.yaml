@@ -1,0 +1,189 @@
+hero:
+  tag: ▸ Ghostbirth 2 · Industry Dossier
+  titleLine1: For
+  titleLine2: Producers.
+  oneliner:
+    - label: Genre
+      value: |-
+        Body
+        Horror
+    - label: Location
+      value: '*Bangkok*'
+    - label: Budget
+      value: |-
+        100–150
+        *K€*
+    - label: Status
+      value: |-
+        In
+        *Dev*
+    - label: Seeking
+      value: |-
+        Co-Prod
+        Partners
+  videoAfter:
+    src: >-
+      https://vz-39ea9c43-53e.b-cdn.net/b9640bf7-7fd9-4aa7-b051-e576b5d9c1ea/playlist.m3u8
+    label: BTS · BKK · 03
+synopsis:
+  sectionLabelNum: '01'
+  sectionLabel: Synopsis
+  title: The *whole* story.
+  spoilerTag: ⚠ Contains ending · Industry only
+  paragraphs:
+    - >-
+      Elena flies from Germany to Bangkok, desperate for a child. Years of
+      fertility treatments at home have failed. She checks into a massage studio
+      with a reputation for making infertile women pregnant. *The house feeds
+      her, washes her, touches her.* Her body begins to change.
+    - >-
+      The woman in the photograph on her dresser burned alive in this house
+      thirty years ago, pregnant.
+    - >-
+      Saul, an English taxi driver, brought Elena in. He cannot let it go. He
+      investigates. He returns to save her. *Elena welcomes him in.* She tells
+      him he looks tired. He should get a massage.
+    - >-
+      The house takes Saul. **Elena gives birth in the basement.** She takes the
+      child. The house burns. She walks out into the night.
+  endCard: A mother. *90 minutes. English and Thai. Body horror.*
+  sizzleNote: Sizzle coming soon.
+  videoAfter:
+    src: >-
+      https://vz-39ea9c43-53e.b-cdn.net/fc16e15c-be6a-4d6f-849c-bb88a9f2870f/playlist.m3u8
+    label: BTS · BKK · 05
+status:
+  sectionLabelNum: '02'
+  sectionLabel: Status · Where We Are
+  title: Script *locked.*
+  cards:
+    - heading: Development
+      body: >-
+        Financed through *own funds and private investment*. Letter of Intent on
+        file.
+    - heading: Test Shoot
+      body: >-
+        Self-funded, completed *Bangkok, March 2025*. Cinematographer Nathan
+        Ceddia. 14 actors tested.
+    - heading: Script & Treatment
+      body: Script locked. *Treatment available on request.* Full script on request.
+    - heading: Residency
+      body: >-
+        *Foundation Cinema Oasis Bangkok* — artist residency following Most
+        Shocking Movie Prize at the foundation's festival.
+  seekingTitle: |-
+    Seeking: minority
+    co-producer **(EU or Asia).**
+  seekingBody: >-
+    Additional development or production financing. Budget range
+    *100,000–150,000 EUR*.
+  videoAfter:
+    src: >-
+      https://vz-39ea9c43-53e.b-cdn.net/b39979b2-efa7-44ee-bf3e-abab52732b75/playlist.m3u8
+    label: BTS · BKK · 06
+timeline:
+  sectionLabelNum: '03'
+  sectionLabel: Production Plan
+  title: Six *moves.*
+  steps:
+    - when: 2023–2026
+      what: Development
+      detail: Research, script, test shoot
+      state: done
+    - when: Aug–Dec 2026
+      what: Pre-Production
+      detail: Bangkok
+      state: now
+    - when: Jan–Mar 2027
+      what: Principal Photography
+      detail: Bangkok · 8–10 weeks
+      state: ''
+    - when: Jun–Dec 2027
+      what: Post-Production
+      state: ''
+    - when: Dec 2027
+      what: Delivery
+      state: ''
+    - when: Q1/Q2 2028
+      what: Festival Premiere
+      detail: Genre circuit target
+      state: ''
+  videoAfter:
+    src: >-
+      https://vz-39ea9c43-53e.b-cdn.net/c40a9e57-d967-4617-a8f1-517c385697d6/playlist.m3u8
+    label: BTS · BKK · 07
+visual:
+  sectionLabelNum: '04'
+  sectionLabel: Visual Approach
+  title: Practical. *In-camera.*
+  leftHeading: What it is
+  leftBody: >-
+    Shot on location in Bangkok with *one built set* (the flesh room).
+    Color-saturated, high contrast, close physical camera. Latex, prosthetics,
+    blood — *as physical as the massage itself*. Full visual treatment in the
+    Lookbook.
+  refs:
+    - name: Argento ·
+      works: Suspiria, Phenomena
+    - name: Cronenberg ·
+      works: Videodrome
+    - name: Scorsese ·
+      works: Taxi Driver
+  rightHeading: What it isn't
+  rightBody: >-
+    We are not making a clean film. We are not making a safe film. *Every effect
+    is physical.*
+  vetoes:
+    - CGI
+    - AI
+    - Green Screen
+    - Digital gore
+    - Cheap jumpscares
+  videoAfter:
+    src: >-
+      https://vz-39ea9c43-53e.b-cdn.net/fcc5a91d-3ef2-4ea5-b534-d907895abc46/playlist.m3u8
+    label: BTS · BKK · 08
+downloads:
+  sectionLabelNum: '05'
+  sectionLabel: Downloads
+  title: The *paperwork.*
+  items:
+    - type: PDF · 14 pages
+      name: Lookbook
+      detail: Visual approach · References
+      file: /cms/downloads/downloads/items/0/file.pdf
+    - type: PDF · 7 pages
+      name: Treatment
+      detail: Full beat sheet
+      file: /cms/downloads/downloads/items/1/file.pdf
+    - type: PDF · 3 pages
+      name: Production Schedule
+      detail: Development through delivery
+      file: /cms/downloads/downloads/items/2/file.pdf
+    - type: PDF · 2 pages
+      name: CV
+      detail: Marius Jopen · Director
+      file: /cms/downloads/downloads/items/3/file.pdf
+    - type: PDF · 3 pages
+      name: Director's Notes
+      detail: ' Intention · Approach · Method'
+      file: /cms/downloads/downloads/items/4/file.pdf
+    - type: PDF · 4 pages
+      name: Synopsis
+      detail: Complete story · Contains ending
+      file: /cms/downloads/downloads/items/5/file.pdf
+    - type: PDF · 2 pages
+      name: Budget & Financing Plan
+      detail: Budget range · Financing structure
+      file: /cms/downloads/downloads/items/6/file.pdf
+  scriptCard:
+    type: On Request
+    name: Full Script
+    detail: >-
+      Available for verified producers, sales agents & financiers. Email
+      contact@ghostbirth2.com
+    file: /cms/downloads/downloads/scriptCard/file.pdf
+  videoAfter:
+    src: >-
+      https://vz-39ea9c43-53e.b-cdn.net/3cb9b10b-c985-46aa-965b-22694a70f2b9/playlist.m3u8
+    label: BTS · BKK · 09

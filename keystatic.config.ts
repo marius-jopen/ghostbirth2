@@ -1,142 +1,375 @@
 import { config, fields, singleton } from "@keystatic/core";
 
+const paragraphs = (label: string) =>
+  fields.array(fields.text({ label: "Paragraph", multiline: true }), {
+    label,
+    itemLabel: (p) => p.value.slice(0, 60),
+  });
+
+const image = (directory: string, publicPath: string) =>
+  fields.image({ label: "Image", directory, publicPath });
+
+const imageArray = (label: string, directory: string, publicPath: string) =>
+  fields.array(image(directory, publicPath), {
+    label,
+    itemLabel: (i) => i.value?.filename ?? "image",
+  });
+
+const labelValueRow = (label: string) =>
+  fields.array(
+    fields.object({
+      label: fields.text({ label: "Label" }),
+      value: fields.text({ label: "Value", multiline: true }),
+    }),
+    { label, itemLabel: (r) => r.fields.label.value }
+  );
+
+const videoAfter = () =>
+  fields.object(
+    {
+      src: fields.url({
+        label: "Video URL (HLS .m3u8 or .mp4, leave empty for red placeholder)",
+      }),
+      label: fields.text({ label: "Label (e.g. BTS · BKK · 01)" }),
+    },
+    { label: "— Video after this section" }
+  );
+
 export default config({
   storage: { kind: "local" },
   ui: {
     brand: { name: "Ghostbirth 2" },
+    navigation: {
+      Pages: ["home", "pitch", "connect"],
+      Site: ["site"],
+    },
   },
   singletons: {
-    hero: singleton({
-      label: "Hero",
-      path: "content/keystatic/hero/",
+    site: singleton({
+      label: "Site (nav, footer, contact)",
+      path: "content/keystatic/site/",
       format: { data: "yaml" },
       schema: {
-        title: fields.text({ label: "Title" }),
-        subtitle: fields.text({ label: "Subtitle" }),
-        status: fields.text({ label: "Status line" }),
-        posterImage: fields.image({
-          label: "Poster background",
-          directory: "public/cms/hero",
-          publicPath: "/cms/hero/",
+        nav: fields.object({
+          brandPrimary: fields.text({ label: "Brand primary (e.g. GHOSTBIRTH)" }),
+          brandAccent: fields.text({ label: "Brand accent (e.g. II)" }),
+          links: fields.array(
+            fields.object({
+              label: fields.text({ label: "Label" }),
+              href: fields.text({ label: "Href (e.g. /#about or /connect)" }),
+            }),
+            { label: "Nav links", itemLabel: (l) => l.fields.label.value }
+          ),
+          producersLabel: fields.text({ label: "Producers pill label" }),
+          producersHref: fields.text({ label: "Producers pill href" }),
+        }),
+        contact: fields.object({
+          email: fields.text({ label: "Email" }),
+          phone: fields.text({ label: "Phone" }),
+          phoneDigits: fields.text({ label: "Phone digits (for tel: link)" }),
+          instagramHandle: fields.text({ label: "Instagram handle" }),
+          instagramUrl: fields.url({ label: "Instagram URL" }),
+        }),
+        footer: fields.object({
+          wordmarkLine1: fields.text({ label: "Wordmark line 1" }),
+          wordmarkLine2Primary: fields.text({ label: "Wordmark line 2 primary" }),
+          wordmarkLine2Accent: fields.text({ label: "Wordmark line 2 accent" }),
+          side: fields.text({ label: "Side blurb", multiline: true }),
+          blocks: fields.array(
+            fields.object({
+              heading: fields.text({ label: "Heading" }),
+              lines: fields.array(
+                fields.object({
+                  text: fields.text({ label: "Text" }),
+                  href: fields.text({ label: "Href (optional)" }),
+                }),
+                { label: "Lines", itemLabel: (l) => l.fields.text.value }
+              ),
+            }),
+            { label: "Footer columns", itemLabel: (b) => b.fields.heading.value }
+          ),
+          bottomLines: fields.array(fields.text({ label: "Line" }), {
+            label: "Bottom bar lines",
+            itemLabel: (l) => l.value,
+          }),
         }),
       },
     }),
 
-    logline: singleton({
-      label: "Logline",
-      path: "content/keystatic/logline/",
+    home: singleton({
+      label: "The Film page",
+      path: "content/keystatic/home/",
       format: { data: "yaml" },
       schema: {
-        text: fields.text({ label: "Logline", multiline: true }),
-      },
-    }),
-
-    about: singleton({
-      label: "About",
-      path: "content/keystatic/about/",
-      format: { data: "yaml" },
-      schema: {
-        title: fields.text({ label: "Title" }),
-        paragraphs: fields.array(
-          fields.text({ label: "Paragraph", multiline: true }),
-          { label: "Paragraphs", itemLabel: (p) => p.value.slice(0, 60) }
+        hero: fields.object(
+          {
+            tag: fields.text({ label: "Tag line (e.g. A Film by... · In Development)" }),
+            titleLine1: fields.text({ label: "Title line 1" }),
+            titleLine2Primary: fields.text({ label: "Title line 2 primary" }),
+            titleLine2Accent: fields.text({ label: "Title line 2 accent" }),
+            sub: fields.text({ label: "Sub (e.g. BODY HORROR · BANGKOK · 90 MIN)" }),
+            lede: fields.text({ label: "Lede paragraph", multiline: true }),
+            ctaPrimaryLabel: fields.text({ label: "Primary CTA label" }),
+            ctaPrimaryHref: fields.text({ label: "Primary CTA href" }),
+            ctaGhostLabel: fields.text({ label: "Ghost CTA label" }),
+            ctaGhostHref: fields.text({ label: "Ghost CTA href" }),
+            posterImage: image("public/cms/hero", "/cms/hero/"),
+            stats: labelValueRow("Hero stats"),
+          },
+          { label: "§ Hero" }
+        ),
+        about: fields.object(
+          {
+            sectionLabelNum: fields.text({ label: "Section number" }),
+            sectionLabel: fields.text({ label: "Section label" }),
+            title: fields.text({ label: "Big title (use *word* for red em)" }),
+            paragraphs: paragraphs("Paragraphs (use *word* for red em, **word** for twist)"),
+            pullQuote: fields.text({
+              label: "Pull quote (renders between 1st and 2nd paragraph)",
+              multiline: true,
+            }),
+            referencesHeading: fields.text({ label: "References heading" }),
+            references: fields.array(
+              fields.text({ label: "Reference" }),
+              { label: "References", itemLabel: (r) => r.value }
+            ),
+            methodHeading: fields.text({ label: "Method heading" }),
+            materials: fields.array(
+              fields.object({
+                text: fields.text({ label: "Chip text" }),
+                hot: fields.checkbox({ label: "Hot (red filled)" }),
+              }),
+              { label: "Materials", itemLabel: (m) => m.fields.text.value }
+            ),
+            videoAfter: videoAfter(),
+          },
+          { label: "§ About" }
+        ),
+        statement: fields.object(
+          {
+            sectionLabelNum: fields.text({ label: "Section number" }),
+            sectionLabel: fields.text({ label: "Section label" }),
+            title: fields.text({ label: "Big title (use *word* for red em)" }),
+            meta: fields.text({ label: "Meta line" }),
+            pdfLabel: fields.text({ label: "PDF button label" }),
+            pdfHref: fields.text({ label: "PDF URL (optional)" }),
+            paragraphs: paragraphs("Paragraphs"),
+            signature: fields.text({ label: "Signature (e.g. — M. Jopen)" }),
+            videoAfter: videoAfter(),
+          },
+          { label: "§ Director's Statement" }
+        ),
+        gallery: fields.object(
+          {
+            sectionLabelNum: fields.text({ label: "Section number" }),
+            sectionLabel: fields.text({ label: "Section label" }),
+            title: fields.text({ label: "Big title (use *word* for red em)" }),
+            facts: fields.array(
+              fields.object({
+                value: fields.text({ label: "Value (big)" }),
+                label: fields.text({ label: "Label" }),
+              }),
+              { label: "Facts", itemLabel: (f) => f.fields.label.value }
+            ),
+            images: imageArray(
+              "Images",
+              "public/cms/film-test-shoot",
+              "/cms/film-test-shoot/"
+            ),
+          },
+          { label: "§ Test Shoot (gallery)" }
+        ),
+        director: fields.object(
+          {
+            sectionLabelNum: fields.text({ label: "Section number" }),
+            sectionLabel: fields.text({ label: "Section label" }),
+            title: fields.text({ label: "Big title (use *word* for red em)" }),
+            portraitImage: image("public/cms/director", "/cms/director/"),
+            paragraphs: paragraphs("Paragraphs"),
+            stats: fields.array(
+              fields.object({
+                value: fields.text({ label: "Number" }),
+                label: fields.text({ label: "Label", multiline: true }),
+              }),
+              { label: "Stats", itemLabel: (s) => s.fields.value.value }
+            ),
+            videoAfter: videoAfter(),
+          },
+          { label: "§ Director" }
+        ),
+        invite: fields.object(
+          {
+            title: fields.text({ label: "Big title (use *word* for red em)" }),
+            body: fields.text({ label: "Body", multiline: true }),
+            ctaLabel: fields.text({ label: "CTA label" }),
+            ctaHref: fields.text({ label: "CTA href" }),
+          },
+          { label: "§ Invite" }
         ),
       },
     }),
 
-    story: singleton({
-      label: "Story",
-      path: "content/keystatic/story/",
+    pitch: singleton({
+      label: "For Producers page",
+      path: "content/keystatic/pitch/",
       format: { data: "yaml" },
       schema: {
-        title: fields.text({ label: "Title" }),
-        paragraphs: fields.array(
-          fields.text({ label: "Paragraph", multiline: true }),
-          { label: "Paragraphs", itemLabel: (p) => p.value.slice(0, 60) }
+        hero: fields.object(
+          {
+            tag: fields.text({ label: "Tag" }),
+            titleLine1: fields.text({ label: "Title line 1" }),
+            titleLine2: fields.text({ label: "Title line 2 (red em)" }),
+            oneliner: fields.array(
+              fields.object({
+                label: fields.text({ label: "Label" }),
+                value: fields.text({ label: "Value (use *word* for red em)", multiline: true }),
+              }),
+              { label: "Oneliner cells", itemLabel: (c) => c.fields.label.value }
+            ),
+            videoAfter: videoAfter(),
+          },
+          { label: "§ Hero" }
+        ),
+        synopsis: fields.object(
+          {
+            sectionLabelNum: fields.text({ label: "Section number" }),
+            sectionLabel: fields.text({ label: "Section label" }),
+            title: fields.text({ label: "Big title (use *word* for red em)" }),
+            spoilerTag: fields.text({ label: "Spoiler tag text" }),
+            paragraphs: paragraphs("Paragraphs"),
+            endCard: fields.text({ label: "End card (use *word* for red em)" }),
+            sizzleNote: fields.text({ label: "Sizzle note (optional)" }),
+            videoAfter: videoAfter(),
+          },
+          { label: "§ Synopsis" }
+        ),
+        status: fields.object(
+          {
+            sectionLabelNum: fields.text({ label: "Section number" }),
+            sectionLabel: fields.text({ label: "Section label" }),
+            title: fields.text({ label: "Big title (use *word* for red em)" }),
+            cards: fields.array(
+              fields.object({
+                heading: fields.text({ label: "Heading" }),
+                body: fields.text({ label: "Body (use *word* for red em)", multiline: true }),
+              }),
+              { label: "Cards", itemLabel: (c) => c.fields.heading.value }
+            ),
+            seekingTitle: fields.text({ label: "Seeking title (use *word* for red em)" }),
+            seekingBody: fields.text({ label: "Seeking body (use *word* for red em)", multiline: true }),
+            videoAfter: videoAfter(),
+          },
+          { label: "§ Status" }
+        ),
+        timeline: fields.object(
+          {
+            sectionLabelNum: fields.text({ label: "Section number" }),
+            sectionLabel: fields.text({ label: "Section label" }),
+            title: fields.text({ label: "Big title (use *word* for red em)" }),
+            steps: fields.array(
+              fields.object({
+                when: fields.text({ label: "When" }),
+                what: fields.text({ label: "What" }),
+                detail: fields.text({ label: "Detail (optional)" }),
+                state: fields.select({
+                  label: "State",
+                  options: [
+                    { label: "Done", value: "done" },
+                    { label: "Now", value: "now" },
+                    { label: "Upcoming", value: "" },
+                  ],
+                  defaultValue: "",
+                }),
+              }),
+              { label: "Steps", itemLabel: (s) => s.fields.what.value }
+            ),
+            videoAfter: videoAfter(),
+          },
+          { label: "§ Timeline" }
+        ),
+        visual: fields.object(
+          {
+            sectionLabelNum: fields.text({ label: "Section number" }),
+            sectionLabel: fields.text({ label: "Section label" }),
+            title: fields.text({ label: "Big title (use *word* for red em)" }),
+            leftHeading: fields.text({ label: "Left column heading" }),
+            leftBody: fields.text({ label: "Left body (use *word* for red em)", multiline: true }),
+            refs: fields.array(
+              fields.object({
+                name: fields.text({ label: "Director/name" }),
+                works: fields.text({ label: "Works (italic red)" }),
+              }),
+              { label: "References", itemLabel: (r) => r.fields.name.value }
+            ),
+            rightHeading: fields.text({ label: "Right column heading" }),
+            rightBody: fields.text({ label: "Right body (use *word* for red em)", multiline: true }),
+            vetoes: fields.array(fields.text({ label: "Veto (NO prefixed)" }), {
+              label: "Vetoes",
+              itemLabel: (v) => v.value,
+            }),
+            videoAfter: videoAfter(),
+          },
+          { label: "§ Visual Approach" }
+        ),
+        downloads: fields.object(
+          {
+            sectionLabelNum: fields.text({ label: "Section number" }),
+            sectionLabel: fields.text({ label: "Section label" }),
+            title: fields.text({ label: "Big title (use *word* for red em)" }),
+            items: fields.array(
+              fields.object({
+                type: fields.text({ label: "Type (e.g. PDF · 14 pages)" }),
+                name: fields.text({ label: "Name" }),
+                detail: fields.text({ label: "Detail" }),
+                file: fields.file({
+                  label: "PDF file",
+                  directory: "public/cms/downloads",
+                  publicPath: "/cms/downloads/",
+                }),
+              }),
+              { label: "Items", itemLabel: (i) => i.fields.name.value }
+            ),
+            scriptCard: fields.object({
+              type: fields.text({ label: "Type" }),
+              name: fields.text({ label: "Name" }),
+              detail: fields.text({ label: "Detail", multiline: true }),
+              file: fields.file({
+                label: "PDF file (optional)",
+                directory: "public/cms/downloads",
+                publicPath: "/cms/downloads/",
+              }),
+            }),
+            videoAfter: videoAfter(),
+          },
+          { label: "§ Downloads" }
         ),
       },
     }),
 
-    director: singleton({
-      label: "Director",
-      path: "content/keystatic/director/",
+    connect: singleton({
+      label: "Connect page",
+      path: "content/keystatic/connect/",
       format: { data: "yaml" },
       schema: {
-        title: fields.text({ label: "Title" }),
-        text: fields.text({ label: "Text", multiline: true }),
-      },
-    }),
-
-    gallery: singleton({
-      label: "Gallery",
-      path: "content/keystatic/gallery/",
-      format: { data: "yaml" },
-      schema: {
-        title: fields.text({ label: "Title" }),
-        description: fields.text({ label: "Description", multiline: true }),
-        loadMore: fields.text({ label: "Load more label" }),
-        images: fields.array(
-          fields.image({
-            label: "Image",
-            directory: "public/cms/gallery",
-            publicPath: "/cms/gallery/",
-          }),
-          { label: "Images", itemLabel: (i) => i.value?.filename ?? "image" }
-        ),
-      },
-    }),
-
-    testimonials: singleton({
-      label: "Testimonials",
-      path: "content/keystatic/testimonials/",
-      format: { data: "yaml" },
-      schema: {
-        title: fields.text({ label: "Title" }),
-        items: fields.array(
-          fields.object({
-            quote: fields.text({ label: "Quote", multiline: true }),
-            author: fields.text({ label: "Author" }),
-          }),
-          { label: "Items", itemLabel: (i) => i.fields.author.value }
-        ),
-      },
-    }),
-
-    footer: singleton({
-      label: "Footer",
-      path: "content/keystatic/footer/",
-      format: { data: "yaml" },
-      schema: {
-        title: fields.text({ label: "Title" }),
-        email: fields.text({ label: "Contact email" }),
-        instagramUrl: fields.url({ label: "Instagram URL" }),
-        substackEmbedUrl: fields.url({ label: "Substack embed URL" }),
-        credit: fields.text({ label: "Credit line" }),
-        copyright: fields.text({ label: "Copyright" }),
-      },
-    }),
-
-    nav: singleton({
-      label: "Nav",
-      path: "content/keystatic/nav/",
-      format: { data: "yaml" },
-      schema: {
-        about: fields.text({ label: "About label" }),
-        story: fields.text({ label: "Story label" }),
-        director: fields.text({ label: "Director label" }),
-        gallery: fields.text({ label: "Gallery label" }),
-        contact: fields.text({ label: "Contact label" }),
-      },
-    }),
-
-    videos: singleton({
-      label: "Video breaks",
-      path: "content/keystatic/videos/",
-      format: { data: "yaml" },
-      schema: {
-        videoOne: fields.url({ label: "Video 1 (HLS .m3u8)" }),
-        videoTwo: fields.url({ label: "Video 2 (HLS .m3u8)" }),
-        videoThree: fields.url({ label: "Video 3 (HLS .m3u8)" }),
+        topVideo: fields.object({
+          src: fields.url({ label: "Top video URL (HLS .m3u8 or .mp4, optional)" }),
+          label: fields.text({ label: "Label" }),
+        }),
+        sectionLabelNum: fields.text({ label: "Section number" }),
+        sectionLabel: fields.text({ label: "Section label" }),
+        title: fields.text({ label: "Big title (use *word* for red em)" }),
+        lede: fields.text({ label: "Lede", multiline: true }),
+        formTitle: fields.text({ label: "Form title" }),
+        formSub: fields.text({ label: "Form subtitle" }),
+        roleLabel: fields.text({ label: "Role label" }),
+        emailLabel: fields.text({ label: "Email field label" }),
+        emailPlaceholder: fields.text({ label: "Email placeholder" }),
+        submitLabel: fields.text({ label: "Submit label" }),
+        submitDoneLabel: fields.text({ label: "Submit done label" }),
+        roles: fields.array(fields.text({ label: "Role" }), {
+          label: "Roles",
+          itemLabel: (r) => r.value,
+        }),
       },
     }),
   },
