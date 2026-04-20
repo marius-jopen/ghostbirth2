@@ -4,13 +4,22 @@ import { useRef, useState, useEffect, useCallback } from "react";
 // @ts-expect-error — splide react types export issue
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide-core.min.css";
-import { useLang } from "./LangContext";
 import styles from "./Gallery.module.css";
 
 const cdnPrefix = process.env.NEXT_PUBLIC_CDN_URL || "";
 
-export default function Gallery({ images }: { images: string[] }) {
-  const { t } = useLang();
+type GalleryContent = {
+  title: string;
+  description: string;
+};
+
+export default function Gallery({
+  images,
+  gallery,
+}: {
+  images: string[];
+  gallery: GalleryContent;
+}) {
   const splideRef = useRef<Splide>(null);
   const lightboxRef = useRef<Splide>(null);
   const [lightbox, setLightbox] = useState<number | null>(null);
@@ -24,7 +33,6 @@ export default function Gallery({ images }: { images: string[] }) {
 
   useEffect(() => {
     if (lightbox === null) return;
-    // Sync lightbox to the clicked slide
     setTimeout(() => {
       lightboxRef.current?.go(lightbox);
     }, 0);
@@ -43,10 +51,9 @@ export default function Gallery({ images }: { images: string[] }) {
 
   return (
     <section id="gallery" className={styles.section}>
-      <h2 className="section-title">{t.gallery.title}</h2>
-      <p className={styles.description}>{t.gallery.description}</p>
+      <h2 className="section-title">{gallery.title}</h2>
+      <p className={styles.description}>{gallery.description}</p>
 
-      {/* Inline multi-slide slider */}
       <div className={styles.sliderWrap}>
         <Splide
           ref={splideRef}
@@ -73,7 +80,7 @@ export default function Gallery({ images }: { images: string[] }) {
           {images.map((src) => (
             <SplideSlide key={src}>
               <img
-                src={`${cdnPrefix}/bts/${src}`}
+                src={`${cdnPrefix}${src}`}
                 alt=""
                 className={styles.image}
                 loading="eager"
@@ -101,7 +108,6 @@ export default function Gallery({ images }: { images: string[] }) {
         </button>
       </div>
 
-      {/* Fullscreen lightbox */}
       {lightbox !== null && (
         <div className={styles.lightbox}>
           <div className={styles.lightboxOverlay} onClick={close} />
@@ -121,7 +127,7 @@ export default function Gallery({ images }: { images: string[] }) {
               <SplideSlide key={src}>
                 <div className={styles.lightboxSlide}>
                   <img
-                    src={`${cdnPrefix}/bts/${src}`}
+                    src={`${cdnPrefix}${src}`}
                     alt=""
                     className={styles.lightboxImage}
                   />

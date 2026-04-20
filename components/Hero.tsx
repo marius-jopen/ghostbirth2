@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { useLang } from "./LangContext";
 import styles from "./Hero.module.css";
 
 function getTargetHeight() {
@@ -11,12 +10,17 @@ function getTargetHeight() {
   return w * ratio;
 }
 
-export default function Hero() {
+type HeroContent = {
+  title: string;
+  subtitle: string;
+  status: string;
+  posterImage: string | null;
+};
+
+export default function Hero({ hero }: { hero: HeroContent }) {
   const heroRef = useRef<HTMLDivElement>(null);
   const [settled, setSettled] = useState(false);
-  const { t } = useLang();
 
-  // Set initial height for intro, wait for poster to load before showing
   useEffect(() => {
     const el = heroRef.current;
     if (!el) return;
@@ -35,7 +39,6 @@ export default function Hero() {
     }
   }, []);
 
-  // Dismiss timer and listeners
   useEffect(() => {
     const dismiss = () => setSettled(true);
 
@@ -50,7 +53,6 @@ export default function Hero() {
     };
   }, []);
 
-  // Transition from intro to header
   useEffect(() => {
     if (!settled) return;
     const el = heroRef.current;
@@ -70,10 +72,13 @@ export default function Hero() {
     return () => el.removeEventListener("transitionend", onEnd);
   }, [settled]);
 
+  const posterSrc = hero.posterImage ?? "/poster-background.jpg";
+  const cdnPrefix = process.env.NEXT_PUBLIC_CDN_URL || "";
+
   return (
     <section ref={heroRef} className={styles.hero}>
       <Image
-        src={`${process.env.NEXT_PUBLIC_CDN_URL || ""}/poster-background.jpg`}
+        src={`${cdnPrefix}${posterSrc}`}
         alt=""
         fill
         priority
@@ -81,15 +86,9 @@ export default function Hero() {
       />
 
       <div className={styles.content}>
-        <h1 className={styles.title}>
-          {t.hero.title}
-        </h1>
-        <p className={styles.subtitle}>
-          {t.hero.subtitle}
-        </p>
-        <p className={styles.status}>
-          {t.hero.status}
-        </p>
+        <h1 className={styles.title}>{hero.title}</h1>
+        <p className={styles.subtitle}>{hero.subtitle}</p>
+        <p className={styles.status}>{hero.status}</p>
       </div>
     </section>
   );

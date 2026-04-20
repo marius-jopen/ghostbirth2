@@ -1,14 +1,14 @@
-"use client";
+type StoryContent = {
+  title: string;
+  paragraphs: readonly string[];
+};
 
-import { useLang } from "./LangContext";
-
-export default function Story() {
-  const { t } = useLang();
+export default function Story({ story }: { story: StoryContent }) {
   return (
     <section id="story" className="section">
-      <h2 className="section-title">{t.story.title}</h2>
+      <h2 className="section-title">{story.title}</h2>
       <div className="section-text-wrap">
-        {t.story.paragraphs.map((p, i) => (
+        {story.paragraphs.map((p, i) => (
           <p key={i} className="section-text">{p}</p>
         ))}
       </div>

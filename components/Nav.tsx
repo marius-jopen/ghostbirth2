@@ -1,10 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useLang } from "./LangContext";
 import styles from "./Nav.module.css";
 
-const linkKeys = [
+type NavContent = {
+  about: string;
+  story: string;
+  director: string;
+  gallery: string;
+  contact: string;
+};
+
+const links = [
   { key: "about" as const, href: "#about" },
   { key: "story" as const, href: "#story" },
   { key: "director" as const, href: "#director" },
@@ -12,9 +19,8 @@ const linkKeys = [
   { key: "contact" as const, href: "#contact" },
 ];
 
-export default function Nav() {
+export default function Nav({ nav }: { nav: NavContent }) {
   const [visible, setVisible] = useState(false);
-  const { t } = useLang();
 
   useEffect(() => {
     const onScroll = () => {
@@ -26,9 +32,9 @@ export default function Nav() {
 
   return (
     <nav className={`${styles.nav} ${visible ? styles.visible : ""}`}>
-      {linkKeys.map((link) => (
+      {links.map((link) => (
         <a key={link.href} href={link.href} className={styles.link}>
-          {t.nav[link.key]}
+          {nav[link.key]}
         </a>
       ))}
     </nav>

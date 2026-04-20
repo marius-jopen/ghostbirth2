@@ -1,11 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { useLang } from "./LangContext";
 import styles from "./Footer.module.css";
 
-export default function Footer() {
-  const { t } = useLang();
+type FooterContent = {
+  title: string;
+  email: string;
+  instagramUrl: string | null;
+  substackEmbedUrl: string | null;
+  credit: string;
+  copyright: string;
+};
+
+export default function Footer({ footer }: { footer: FooterContent }) {
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -32,33 +39,35 @@ export default function Footer() {
 
   return (
     <footer id="contact" className={styles.footer}>
-      <h2 className="section-title">{t.footer.title}</h2>
+      <h2 className="section-title">{footer.title}</h2>
 
       <div className={styles.links}>
-        <a href="mailto:ghostbirth2@thepeople.world" className={styles.link}>
-          ghostbirth2@thepeople.world
+        <a href={`mailto:${footer.email}`} className={styles.link}>
+          {footer.email}
         </a>
-        <a
-          href="https://instagram.com/ghostbirth2"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={styles.link}
-        >
-          <svg
-            className={styles.icon}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+        {footer.instagramUrl && (
+          <a
+            href={footer.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.link}
           >
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-          </svg>
-          Instagram
-        </a>
+            <svg
+              className={styles.icon}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+            </svg>
+            Instagram
+          </a>
+        )}
       </div>
 
       {!submitted ? (
@@ -103,22 +112,24 @@ export default function Footer() {
         <p className={styles.thanks}>Message sent.</p>
       )}
 
-      <div className={styles.substack}>
-        <p className={styles.substackLabel}>Ghostly News</p>
-        <div className={styles.substackWrap}>
-          <iframe
-            src="https://ghostbirth2.substack.com/embed"
-            width="480"
-            height="320"
-            className={styles.substackEmbed}
-            frameBorder="0"
-            scrolling="no"
-          />
+      {footer.substackEmbedUrl && (
+        <div className={styles.substack}>
+          <p className={styles.substackLabel}>Ghostly News</p>
+          <div className={styles.substackWrap}>
+            <iframe
+              src={footer.substackEmbedUrl}
+              width="480"
+              height="320"
+              className={styles.substackEmbed}
+              frameBorder="0"
+              scrolling="no"
+            />
+          </div>
         </div>
-      </div>
+      )}
 
-      <p className={styles.credit}>{t.footer.credit}</p>
-      <p className={styles.copyright}>{t.footer.copyright}</p>
+      <p className={styles.credit}>{footer.credit}</p>
+      <p className={styles.copyright}>{footer.copyright}</p>
     </footer>
   );
 }

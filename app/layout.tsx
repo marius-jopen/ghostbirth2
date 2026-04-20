@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
-import { LangProvider } from "@/components/LangContext";
 import "./globals.css";
 
 const gravity = localFont({
@@ -54,7 +53,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${gravity.variable} ${mono.variable}`}>
-      <body><LangProvider>{children}</LangProvider></body>
+      <body>{children}</body>
     </html>
   );
 }
