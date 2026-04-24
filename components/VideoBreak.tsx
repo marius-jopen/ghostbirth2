@@ -18,11 +18,22 @@ export default function VideoBreak({ video }: { video: VideoBreakContent }) {
     if (!videoEl) return;
 
     let hls: Hls | null = null;
+    let looping = false;
+
+    const safePlay = () => {
+      const p = videoEl.play();
+      if (p && typeof p.catch === "function") {
+        p.catch(() => {});
+      }
+    };
 
     const forceLoop = () => {
+      if (looping) return;
       if (videoEl.ended || (videoEl.duration && videoEl.currentTime >= videoEl.duration - 0.5)) {
+        looping = true;
         videoEl.currentTime = 0;
-        videoEl.play();
+        safePlay();
+        setTimeout(() => { looping = false; }, 200);
       }
     };
 
@@ -33,7 +44,7 @@ export default function VideoBreak({ video }: { video: VideoBreakContent }) {
       hls = new Hls();
       hls.loadSource(src);
       hls.attachMedia(videoEl);
-      hls.on(Hls.Events.MANIFEST_PARSED, () => videoEl.play());
+      hls.on(Hls.Events.MANIFEST_PARSED, safePlay);
     } else {
       videoEl.src = src;
     }

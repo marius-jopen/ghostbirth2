@@ -106,7 +106,7 @@ img {
 .nav {
   position: fixed;
   top: 0; left: 0; right: 0;
-  z-index: 50;
+  z-index: 10000;
   padding: 18px 56px;
   display: flex;
   justify-content: space-between;
@@ -216,7 +216,7 @@ img {
 .mobile-menu {
   position: fixed;
   inset: 0;
-  z-index: 49;
+  z-index: 9999;
   background: rgba(0,0,0,0.96);
   backdrop-filter: blur(14px);
   display: flex;

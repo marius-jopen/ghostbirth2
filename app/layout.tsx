@@ -57,7 +57,7 @@ export default async function RootLayout({
 }>) {
   const site = await getSite();
   return (
-    <html lang="en" className={`${gravity.variable} ${mono.variable}`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${gravity.variable} ${mono.variable}`}>
       <body className="grain">
         <BloodSmear />
         <Nav nav={site.nav} />

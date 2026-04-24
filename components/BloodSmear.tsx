@@ -61,14 +61,35 @@ export default function BloodSmear() {
     setCanvasSize();
     window.addEventListener("resize", setCanvasSize);
 
-    // Check page height periodically (cheap, no MutationObserver)
-    const heightCheck = setInterval(setCanvasSize, 2000);
+    // Re-measure when the document's content actually changes size (fonts,
+    // images, route-less layout shifts). ResizeObserver fires only on real
+    // changes, so no periodic layout thrash during scroll.
+    let measurePending = false;
+    const scheduleMeasure = () => {
+      if (measurePending) return;
+      measurePending = true;
+      requestAnimationFrame(() => {
+        measurePending = false;
+        setCanvasSize();
+      });
+    };
+    const ro = new ResizeObserver(scheduleMeasure);
+    ro.observe(document.body);
 
     const onScroll = () => {
       isScrolling = true;
       hasPrev = false;
+      // Suspend drip painting during scroll — stroking on a page-tall canvas
+      // while the browser is compositing is the main source of scroll jank.
+      if (dripRafId !== null) {
+        cancelAnimationFrame(dripRafId);
+        dripRafId = null;
+      }
       if (scrollTimer) clearTimeout(scrollTimer);
-      scrollTimer = setTimeout(() => { isScrolling = false; }, 100);
+      scrollTimer = setTimeout(() => {
+        isScrolling = false;
+        if (drips.length > 0) ensureDripLoop();
+      }, 100);
     };
 
     let distAccumulated = 0;
@@ -508,7 +529,7 @@ export default function BloodSmear() {
       document.removeEventListener("touchend", onTouchEnd);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", setCanvasSize);
-      clearInterval(heightCheck);
+      ro.disconnect();
       if (scrollTimer) clearTimeout(scrollTimer);
       if (rafId) cancelAnimationFrame(rafId);
       if (dripRafId !== null) cancelAnimationFrame(dripRafId);
