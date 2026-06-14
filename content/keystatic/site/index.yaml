@@ -11,7 +11,7 @@ nav:
     - label: Director
       href: "/#director"
     - label: Connect
-      href: /connect
+      href: /#contact
   producersLabel: "→ For Producers"
   producersHref: /pitch
 contact:

@@ -1,6 +1,7 @@
 import ProdHero from "@/components/ProdHero";
 import Synopsis from "@/components/Synopsis";
 import Status from "@/components/Status";
+import WhyNow from "@/components/WhyNow";
 import Timeline from "@/components/Timeline";
 import Visual from "@/components/Visual";
 import Downloads from "@/components/Downloads";
@@ -17,6 +18,7 @@ export default async function PitchPage() {
       <VideoBreak video={pitch.synopsis.videoAfter} />
       <Status status={pitch.status} />
       <VideoBreak video={pitch.status.videoAfter} />
+      <WhyNow whyNow={pitch.whyNow} />
       <Timeline timeline={pitch.timeline} />
       <VideoBreak video={pitch.timeline.videoAfter} />
       <Visual visual={pitch.visual} />

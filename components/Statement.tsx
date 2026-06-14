@@ -7,11 +7,14 @@ type StatementContent = {
   meta: string;
   pdfLabel: string;
   pdfHref: string;
-  paragraphs: readonly string[];
-  signature: string;
+  body: string;
 };
 
 export default function Statement({ statement }: { statement: StatementContent }) {
+  const paragraphs = statement.body
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
   return (
     <section id="statement" className="statement">
       <div className="wrap">
@@ -35,12 +38,9 @@ export default function Statement({ statement }: { statement: StatementContent }
             ) : null}
           </div>
           <div className="statement-body">
-            {statement.paragraphs.map((p, i) => (
+            {paragraphs.map((p, i) => (
               <p key={i}>{emph(p)}</p>
             ))}
-            {statement.signature && (
-              <div className="statement-sig">{statement.signature}</div>
-            )}
           </div>
         </div>
       </div>

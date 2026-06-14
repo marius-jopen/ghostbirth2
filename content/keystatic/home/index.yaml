@@ -5,11 +5,8 @@ hero:
   titleLine2Accent: '2'
   sub: BODY HORROR · BANGKOK · 90 MIN
   lede: >-
-    **Elena can't have children.** She flies to Bangkok for a fertility massage
-    at a place with a reputation for making infertile women pregnant. She
-    doesn't know that thirty years ago a pregnant woman burned alive in the
-    house, that the neighborhood calls it cursed, or that women disappear
-    inside. She gets pregnant. *The child is not hers.*
+    **Elena can't have children.** She goes to Bangkok for a fertility treatment
+    in a massage studio. The house is cursed. She gets pregnant.
   ctaPrimaryLabel: For Producers
   ctaPrimaryHref: /pitch
   ctaGhostLabel: Director's Statement
@@ -33,15 +30,21 @@ about:
       Not the version you see on social media. *The other version.* The
       desperation. The pressure. The willingness to accept anything to become a
       mother.
+    - >-
+      Women from Germany fly to Asia for the children their own country denies
+      them. This is a film about what they find there.
     - Shot in Bangkok. Latex, prosthetics, blood. **No CGI. No AI.**
   pullQuote: >-
-    The pressure to become a mother is so great that a woman would rather carry
-    a dead woman's child than go home empty.
-  referencesHeading: References
-  references:
-    - '*Argento*'
-    - '*Cronenberg*'
-    - '*Scorsese*'
+    The pressure is so great that a woman would rather carry a dead woman's
+    child than go home empty.
+  lineageHeading: Lineage
+  lineage:
+    - label: From
+      value: Space Birth
+    - label: Toward
+      value: Nang Nak · Shutter · Fulci
+    - label: Through
+      value: Latex · Cardboard · Sweat
   methodHeading: Method
   materials:
     - text: Latex
@@ -66,30 +69,30 @@ statement:
     to *me.*
   meta: Marius Jopen · Berlin · 2025
   pdfLabel: → Full Statement (PDF)
-  paragraphs:
-    - I didn't come up with Ghost Birth. *It happened to me.*
-    - >-
-      In 2023, my first film screened at Foundation Cinema Oasis in Bangkok. I went to a
-      massage studio nearby almost every day. After thirty sessions, Ing asked
-      me if I knew the history of the building. I didn't. *She told me that
-      thirty years ago, a pregnant woman had burned alive inside the house.* The
-      locals avoid the place. That is why there are no Thai customers.
-    - >-
-      I had been lying on that floor for a month. *Inside a ghost story I didn't
-      know I was part of.*
-    - >-
-      The first version of this film was about a man who runs from fatherhood.
-      That man was me. The film has changed. It is no longer about a man who
-      runs. **It is about a woman who stays.** Elena knows what is growing
-      inside her. She knows the child belongs to a ghost. She knows the house is
-      a machine. And she chooses to keep it.
-    - >-
-      All effects will be practical. *Built by hand, on set, with latex and
-      light and sweat.*
-  signature: — M. Jopen
+  body: >-
+    I didn't come up with Ghost Birth. **It happened to me.**
+
+
+    In 2023 I spent a month on the floor of a massage studio in Bangkok, almost
+    every day. After thirty sessions, Ing asked me if I knew the history of the
+    building. I didn't. She told me: **thirty years ago, a pregnant woman burned
+    alive inside this house.** The locals avoid the place. That is why there are
+    no Thai customers.
+
+
+    **I had been lying inside a ghost house for a month without knowing.**
+
+
+    The first version of this film was about a man who runs from fatherhood.
+    That man was me. The film changed. It is no longer about a man who runs. It
+    is about a woman who stays. **Elena knows what is growing inside her. She
+    knows the child belongs to a ghost. She knows the house is a machine.**
+
+
+    No CGI. No AI. Latex, light, sweat. Built by hand, on set. 
   videoAfter:
     src: >-
-      https://vz-39ea9c43-53e.b-cdn.net/8c06b352-57bc-4bec-8204-ffaab57f4089/playlist.m3u8
+      https://vz-39ea9c43-53e.b-cdn.net/b39979b2-efa7-44ee-bf3e-abab52732b75/playlist.m3u8
     label: BTS · BKK · 02
 gallery:
   sectionLabelNum: '03'
@@ -102,7 +105,7 @@ gallery:
       label: Actors tested
     - value: 7K€
       label: Self-funded
-    - value: N. Ceddia
+    - value: Nathan Ceddia
       label: Cinematographer
   images:
     - /cms/film-test-shoot/gallery/images/0.jpg
@@ -123,12 +126,15 @@ director:
   title: Marius *Jopen.*
   portraitImage: /cms/director/director/portraitImage.jpg
   paragraphs:
+    - Marius Jopen.
     - >-
-      Berlin-based filmmaker. His first feature *Space Birth* — a no-budget
-      science fiction film built with 300 volunteers and a spaceship made of
-      cardboard — won the *Most Shocking Stoner Movie Prize* at Foundation
-      Cinema Oasis Bangkok. The residency there is where Ghostbirth 2 began.
-    - Ghostbirth 2 is his second feature.
+      First feature: *Space Birth.* No budget. 300 volunteers. A spaceship made
+      of cardboard. A film so unclassifiable that Foundation Cinema Oasis
+      Bangkok invented a prize to honour it — Most Shocking Stoner Movie.
+    - The residency that followed is where Ghost Birth 2 began.
+    - >-
+      This is his second feature. Bigger, darker, built with the same rule: by
+      hand, or not at all.
   stats:
     - value: '300'
       label: |-
@@ -136,8 +142,8 @@ director:
         Space Birth
     - value: '01'
       label: |-
-        Most Shocking Stoner
-        Movie Prize
+        Prize invented
+        for his film
     - value: '02'
       label: |-
         Features
@@ -145,6 +151,42 @@ director:
   videoAfter:
     src: >-
       https://vz-39ea9c43-53e.b-cdn.net/24c758f2-9f63-4125-ad9c-0dcf22892714/playlist.m3u8
+foundation:
+  marquee:
+    - Foundation Cinema Oasis
+    - Bangkok
+    - Project Origin
+  sectionLabelNum: '05'
+  sectionLabel: Origin
+  year: '2022'
+  hookLine: '*Space Birth* won a prize'
+  hookPrize: invented to honour it.
+  sub: Most Shocking Stoner Movie Prize · Foundation Cinema Oasis, Bangkok
+  plateLabel: IMG · OASIS · BKK
+  plateCorner: Plate 01 · archival
+  col1Kicker: Then
+  col1Body: >-
+    Marius Jopen's first feature — a no-budget science fiction film built with
+    *300 volunteers and a cardboard spaceship* — screened at Foundation Cinema
+    Oasis in 2022. The foundation's festival invented a category to award it.
+  col2Kicker: Now
+  col2Body: >-
+    The conversation that began there is where *Ghost Birth 2* took root. The
+    foundation — run by filmmakers *Ing Kanjanavanit* and *Manit Sriwanichpoom*
+    — remains a key creative partner in Bangkok.
+  meta:
+    - label: Founded by
+      value: |-
+        Ing Kanjanavanit
+        Manit Sriwanichpoom
+    - label: Location
+      value: Bangkok, *TH*
+    - label: First contact
+      value: '2022'
+    - label: Prize
+      value: |-
+        Most Shocking
+        *Stoner Movie*
 invite:
   title: Are you a *producer?*
   body: >-

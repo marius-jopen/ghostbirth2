@@ -128,10 +128,13 @@ export default config({
               label: "Pull quote (renders between 1st and 2nd paragraph)",
               multiline: true,
             }),
-            referencesHeading: fields.text({ label: "References heading" }),
-            references: fields.array(
-              fields.text({ label: "Reference" }),
-              { label: "References", itemLabel: (r) => r.value }
+            lineageHeading: fields.text({ label: "Lineage heading" }),
+            lineage: fields.array(
+              fields.object({
+                label: fields.text({ label: "Label (e.g. From / Toward / Through)" }),
+                value: fields.text({ label: "Value" }),
+              }),
+              { label: "Lineage", itemLabel: (r) => r.fields.label.value }
             ),
             methodHeading: fields.text({ label: "Method heading" }),
             materials: fields.array(
@@ -153,8 +156,10 @@ export default config({
             meta: fields.text({ label: "Meta line" }),
             pdfLabel: fields.text({ label: "PDF button label" }),
             pdfHref: fields.text({ label: "PDF URL (optional)" }),
-            paragraphs: paragraphs("Paragraphs"),
-            signature: fields.text({ label: "Signature (e.g. — M. Jopen)" }),
+            body: fields.text({
+              label: "Body (blank line separates paragraphs, *word* for red em)",
+              multiline: true,
+            }),
             videoAfter: videoAfter(),
           },
           { label: "§ Director's Statement" }
@@ -196,6 +201,46 @@ export default config({
             videoAfter: videoAfter(),
           },
           { label: "§ Director" }
+        ),
+        foundation: fields.object(
+          {
+            marquee: fields.array(
+              fields.text({ label: "Marquee item" }),
+              { label: "Marquee (joined with · and looped)", itemLabel: (i) => i.value }
+            ),
+            sectionLabelNum: fields.text({ label: "Section number" }),
+            sectionLabel: fields.text({ label: "Section label" }),
+            year: fields.text({ label: "Year (big red display number)" }),
+            hookLine: fields.text({
+              label: "Hook line 1 (use *word* for italic white em)",
+            }),
+            hookPrize: fields.text({ label: "Hook line 2 (red, the 'prize' line)" }),
+            sub: fields.text({ label: "Sub line (small caps under hook)" }),
+            plateImage: image("public/cms/foundation", "/cms/foundation/"),
+            plateLabel: fields.text({ label: "Plate placeholder label (when no image)" }),
+            plateCorner: fields.text({ label: "Plate bottom-right corner label" }),
+            col1Kicker: fields.text({ label: "Column 1 kicker (e.g. Then)" }),
+            col1Body: fields.text({
+              label: "Column 1 body (use *word* for red em)",
+              multiline: true,
+            }),
+            col2Kicker: fields.text({ label: "Column 2 kicker (e.g. Now)" }),
+            col2Body: fields.text({
+              label: "Column 2 body (use *word* for red em)",
+              multiline: true,
+            }),
+            meta: fields.array(
+              fields.object({
+                label: fields.text({ label: "Label" }),
+                value: fields.text({
+                  label: "Value (newlines allowed, *word* for red em)",
+                  multiline: true,
+                }),
+              }),
+              { label: "Meta cells (4 total)", itemLabel: (r) => r.fields.label.value }
+            ),
+          },
+          { label: "§ Foundation" }
         ),
         invite: fields.object(
           {
@@ -261,6 +306,18 @@ export default config({
           },
           { label: "§ Status" }
         ),
+        whyNow: fields.object(
+          {
+            sectionLabelNum: fields.text({ label: "Section number" }),
+            sectionLabel: fields.text({ label: "Section label" }),
+            title: fields.text({ label: "Big title (use *word* for red em)" }),
+            body: fields.text({
+              label: "Body (blank line separates paragraphs, *word* for red em)",
+              multiline: true,
+            }),
+          },
+          { label: "§ Why Now" }
+        ),
         timeline: fields.object(
           {
             sectionLabelNum: fields.text({ label: "Section number" }),
@@ -294,12 +351,12 @@ export default config({
             title: fields.text({ label: "Big title (use *word* for red em)" }),
             leftHeading: fields.text({ label: "Left column heading" }),
             leftBody: fields.text({ label: "Left body (use *word* for red em)", multiline: true }),
-            refs: fields.array(
+            positioning: fields.array(
               fields.object({
-                name: fields.text({ label: "Director/name" }),
-                works: fields.text({ label: "Works (italic red)" }),
+                label: fields.text({ label: "Label (e.g. In the lineage of)" }),
+                value: fields.text({ label: "Value" }),
               }),
-              { label: "References", itemLabel: (r) => r.fields.name.value }
+              { label: "Positioning", itemLabel: (r) => r.fields.label.value }
             ),
             rightHeading: fields.text({ label: "Right column heading" }),
             rightBody: fields.text({ label: "Right body (use *word* for red em)", multiline: true }),

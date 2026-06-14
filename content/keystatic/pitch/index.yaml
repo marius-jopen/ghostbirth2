@@ -32,22 +32,24 @@ synopsis:
   spoilerTag: ⚠ Contains ending · Industry only
   paragraphs:
     - >-
-      Elena flies from Germany to Bangkok, desperate for a child. Years of
-      fertility treatments at home have failed. She checks into a massage studio
-      with a reputation for making infertile women pregnant. *The house feeds
-      her, washes her, touches her.* Her body begins to change.
+      Elena can't have children. Years of fertility treatments in Germany have
+      failed. She flies to Bangkok and checks into a massage studio with a
+      reputation for making infertile women pregnant.
+    - The house feeds her. Washes her. Touches her. Her body begins to change.
     - >-
-      The woman in the photograph on her dresser burned alive in this house
-      thirty years ago, pregnant.
+      On her dresser sits a photograph of a woman she has never met. A woman
+      who burned alive in this house thirty years ago, pregnant.
     - >-
       Saul, an English taxi driver, brought Elena in. He cannot let it go. He
-      investigates. He returns to save her. *Elena welcomes him in.* She tells
-      him he looks tired. He should get a massage.
+      investigates. He returns to save her.
     - >-
-      The house takes Saul. **Elena gives birth in the basement.** She takes the
+      Elena welcomes him in. She tells him he looks tired. He should get a
+      massage.
+    - >-
+      The house takes Saul. Elena gives birth in the basement. She takes the
       child. The house burns. She walks out into the night.
   endCard: A mother. *90 minutes. English and Thai. Body horror.*
-  sizzleNote: Sizzle coming soon.
+  sizzleNote: Selected test footage available on request.
   videoAfter:
     src: >-
       https://vz-39ea9c43-53e.b-cdn.net/fc16e15c-be6a-4d6f-849c-bb88a9f2870f/playlist.m3u8
@@ -69,8 +71,9 @@ status:
       body: Script locked. *Treatment available on request.* Full script on request.
     - heading: Residency
       body: >-
-        *Foundation Cinema Oasis Bangkok* — artist residency following Most
-        Shocking Movie Prize at the foundation's festival.
+        *Foundation Cinema Oasis Bangkok* — artist residency following the Most
+        Shocking Stoner Movie Prize, invented by the foundation to honour Space
+        Birth.
   seekingTitle: |-
     Seeking: minority
     co-producer **(EU or Asia).**
@@ -81,8 +84,16 @@ status:
     src: >-
       https://vz-39ea9c43-53e.b-cdn.net/b39979b2-efa7-44ee-bf3e-abab52732b75/playlist.m3u8
     label: BTS · BKK · 06
-timeline:
+whyNow:
   sectionLabelNum: '03'
+  sectionLabel: Why Now
+  title: The *moment.*
+  body: |-
+    Arthouse body horror with female-led protagonists is the defining genre of the decade. Titane, The Substance, Saint Maud, Immaculate. Thai ghost cinema is in global demand again. Fertility tourism is a current, under-filmed subject.
+
+    Ghost Birth 2 sits at the intersection of all three.
+timeline:
+  sectionLabelNum: '04'
   sectionLabel: Production Plan
   title: Six *moves.*
   steps:
@@ -113,7 +124,7 @@ timeline:
       https://vz-39ea9c43-53e.b-cdn.net/c40a9e57-d967-4617-a8f1-517c385697d6/playlist.m3u8
     label: BTS · BKK · 07
 visual:
-  sectionLabelNum: '04'
+  sectionLabelNum: '05'
   sectionLabel: Visual Approach
   title: Practical. *In-camera.*
   leftHeading: What it is
@@ -122,13 +133,13 @@ visual:
     Color-saturated, high contrast, close physical camera. Latex, prosthetics,
     blood — *as physical as the massage itself*. Full visual treatment in the
     Lookbook.
-  refs:
-    - name: Argento ·
-      works: Suspiria, Phenomena
-    - name: Cronenberg ·
-      works: Videodrome
-    - name: Scorsese ·
-      works: Taxi Driver
+  positioning:
+    - label: In the lineage of
+      value: Titane · Saint Maud · Shutter · Impetigore
+    - label: Built like
+      value: Troma. Cardboard. Sweat.
+    - label: From
+      value: Space Birth — Most Shocking Stoner Movie Prize, Bangkok 2022
   rightHeading: What it isn't
   rightBody: >-
     We are not making a clean film. We are not making a safe film. *Every effect
@@ -144,7 +155,7 @@ visual:
       https://vz-39ea9c43-53e.b-cdn.net/fcc5a91d-3ef2-4ea5-b534-d907895abc46/playlist.m3u8
     label: BTS · BKK · 08
 downloads:
-  sectionLabelNum: '05'
+  sectionLabelNum: '06'
   sectionLabel: Downloads
   title: The *paperwork.*
   items:

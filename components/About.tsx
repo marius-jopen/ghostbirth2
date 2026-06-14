@@ -7,8 +7,8 @@ type AboutContent = {
   title: string;
   paragraphs: readonly string[];
   pullQuote: string;
-  referencesHeading: string;
-  references: readonly string[];
+  lineageHeading: string;
+  lineage: readonly { label: string; value: string }[];
   methodHeading: string;
   materials: readonly { text: string; hot: boolean }[];
 };
@@ -40,12 +40,15 @@ export default function About({ about }: { about: AboutContent }) {
           </div>
           <aside className="about-side">
             <div className="note">
-              <strong>{about.referencesHeading}</strong>
-              <div className="refs">
-                {about.references.map((r, i) => (
-                  <span key={i}>{emph(r)}</span>
+              <strong>{about.lineageHeading}</strong>
+              <dl className="lineage">
+                {about.lineage.map((r, i) => (
+                  <div className="lineage-row" key={i}>
+                    <dt>{r.label}</dt>
+                    <dd>{r.value}</dd>
+                  </div>
                 ))}
-              </div>
+              </dl>
             </div>
             <div className="note">
               <strong>{about.methodHeading}</strong>

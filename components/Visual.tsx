@@ -1,6 +1,6 @@
 import { emph } from "@/lib/emph";
 
-type Ref = { name: string; works: string };
+type PositioningRow = { label: string; value: string };
 
 type VisualContent = {
   sectionLabelNum: string;
@@ -8,7 +8,7 @@ type VisualContent = {
   title: string;
   leftHeading: string;
   leftBody: string;
-  refs: readonly Ref[];
+  positioning: readonly PositioningRow[];
   rightHeading: string;
   rightBody: string;
   vetoes: readonly string[];
@@ -28,13 +28,14 @@ export default function Visual({ visual }: { visual: VisualContent }) {
           <div className="visual-col">
             <h3>{visual.leftHeading}</h3>
             <p>{emph(visual.leftBody)}</p>
-            <div className="refs-list">
-              {visual.refs.map((r, i) => (
-                <span key={i}>
-                  {r.name} <em>{r.works}</em>
-                </span>
+            <dl className="positioning">
+              {visual.positioning.map((r, i) => (
+                <div className="positioning-row" key={i}>
+                  <dt>{r.label}</dt>
+                  <dd>{r.value}</dd>
+                </div>
               ))}
-            </div>
+            </dl>
           </div>
           <div className="visual-col">
             <h3>{visual.rightHeading}</h3>
