@@ -22,7 +22,7 @@ export default async function Home() {
   return (
     <>
       <Hero hero={home.hero} />
-      <VideoBreak video={home.about.videoAfter} fullscreen />
+      <VideoBreak video={home.hero.introVideo} fullscreen />
       <About about={home.about} />
       <VideoBreak video={home.about.videoAfter} />
       <Statement statement={home.statement} />
@@ -31,7 +31,7 @@ export default async function Home() {
       <Director director={home.director} />
       <VideoBreak video={home.director.videoAfter} />
       <Foundation foundation={home.foundation} />
-      <VideoBreak video={home.statement.videoAfter} fullscreen />
+      <VideoBreak video={home.foundation.video} fullscreen />
       <Invite invite={home.invite} />
       <VideoBreak video={connect.topVideo} />
       <Connect body={connect} contact={site.contact} />

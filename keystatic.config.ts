@@ -115,6 +115,7 @@ export default config({
             ctaGhostHref: fields.text({ label: "Ghost CTA href" }),
             posterImage: image("public/cms/hero", "/cms/hero/"),
             stats: labelValueRow("Hero stats"),
+            introVideo: videoAfter(),
           },
           { label: "§ Hero" }
         ),
@@ -239,6 +240,7 @@ export default config({
               }),
               { label: "Meta cells (4 total)", itemLabel: (r) => r.fields.label.value }
             ),
+            video: videoAfter(),
           },
           { label: "§ Foundation" }
         ),

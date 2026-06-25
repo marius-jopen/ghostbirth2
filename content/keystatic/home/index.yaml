@@ -21,6 +21,9 @@ hero:
       value: Bangkok 2026
     - label: Producer
       value: The People
+  introVideo:
+    src: >-
+      https://vz-39ea9c43-53e.b-cdn.net/12bfc0b2-d02a-489d-81c2-6787b286dfba/playlist.m3u8
 about:
   sectionLabelNum: '01'
   sectionLabel: About
@@ -59,14 +62,12 @@ about:
       hot: false
   videoAfter:
     src: >-
-      https://vz-39ea9c43-53e.b-cdn.net/12bfc0b2-d02a-489d-81c2-6787b286dfba/playlist.m3u8
+      https://vz-39ea9c43-53e.b-cdn.net/a8ae8e11-cbf4-4d74-8a6b-35e4f75d332d/playlist.m3u8
     label: BTS · BKK · 01
 statement:
   sectionLabelNum: '02'
   sectionLabel: Director's Statement
-  title: |-
-    It happened
-    to *me.*
+  title: It happenedto *me.*
   meta: Marius Jopen · Berlin · 2025
   pdfLabel: → Full Statement (PDF)
   body: >-
@@ -187,6 +188,7 @@ foundation:
       value: |-
         Most Shocking
         *Stoner Movie*
+  video: {}
 invite:
   title: Are you a *producer?*
   body: >-
