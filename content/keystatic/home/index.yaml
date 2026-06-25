@@ -163,7 +163,8 @@ foundation:
   hookLine: '*Space Birth* won a prize'
   hookPrize: invented to honour it.
   sub: Most Shocking Stoner Movie Prize · Foundation Cinema Oasis, Bangkok
-  plateLabel: IMG · OASIS · BKK
+  plateImage: /cms/foundation/foundation/plateImage.png
+  plateLabel: OASIS · BKK
   plateCorner: Plate 01 · archival
   col1Kicker: Then
   col1Body: >-
@@ -188,7 +189,9 @@ foundation:
       value: |-
         Most Shocking
         *Stoner Movie*
-  video: {}
+  video:
+    src: >-
+      https://vz-39ea9c43-53e.b-cdn.net/57d24d48-0386-481a-8dcd-2b581b0fbd99/playlist.m3u8
 invite:
   title: Are you a *producer?*
   body: >-
